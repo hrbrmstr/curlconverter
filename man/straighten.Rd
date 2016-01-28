@@ -4,10 +4,10 @@
 \alias{straighten}
 \title{Processes new cURL request}
 \usage{
-straighten(curl = read_clip())
+straighten(curls = read_clip())
 }
 \arguments{
-\item{curl}{a character vector of one or more cURL command lines. It will read from the
+\item{curls}{a character vector of one or more cURL command lines. It will read from the
 clipboard (i.e. if you did a \emph{"Copy as cURL"} from browser developer tools).}
 }
 \value{

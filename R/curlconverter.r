@@ -14,11 +14,11 @@
 #' Will eventually have an option to return a function, or function source
 #' Right now it just returns daa
 #'
-#' @param curl a character vector of one or more cURL command lines. It will read from the
+#' @param curls a character vector of one or more cURL command lines. It will read from the
 #'        clipboard (i.e. if you did a \emph{"Copy as cURL"} from browser developer tools).
 #' @return list of data to use in `httr` requests
 #' @export
-straighten <- function(curl=read_clip()) {
+straighten <- function(curls=read_clip()) {
   req <- map(curl, function(x) { .pkgenv$ct$call("curlconverter.toR", x) })
   req
 }
