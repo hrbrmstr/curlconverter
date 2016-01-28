@@ -3,5 +3,5 @@
 export(straighten)
 import(V8)
 import(clipr)
+import(httr)
 import(purrr)
-import(urltools)

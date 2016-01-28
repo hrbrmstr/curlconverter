@@ -1,14 +1,3 @@
-.pkgenv <- new.env(parent=emptyenv())
-
-.onAttach <- function(...) {
-
-  ct <- v8()
-  ct$source(system.file("js/curl-bundle.js", package="curlconverter"))
-  assign("ct", ct, envir=.pkgenv)
-
-}
-
-
 #' Processes new cURL request
 #'
 #' Will eventually have an option to return a function, or function source
@@ -19,7 +8,12 @@
 #' @return list of data to use in `httr` requests
 #' @export
 straighten <- function(curls=read_clip()) {
-  req <- map(curls, function(x) { .pkgenv$ct$call("curlconverter.toR", x) })
+  req <- map(curls, process_curl)
   req
 }
 
+process_curl <- function(x) {
+  req <- .pkgenv$ct$call("curlconverter.toR", x)
+  req$url_parts <- unclass(parse_url(req$url))
+  req
+}

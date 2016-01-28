@@ -3,5 +3,5 @@
 #' @name curlconverter
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
-#' @import V8 purrr urltools clipr
+#' @import V8 purrr httr clipr
 NULL
