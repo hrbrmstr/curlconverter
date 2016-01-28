@@ -30,17 +30,18 @@ packageVersion("curlconverter")
 #> [1] "curl -i -X POST http://1.2.3.4/endpoint -H \"Content-Type:application/json\" -H 'key:abcdefg'"
 
 straighten(curl_line)
-#> $url
+#> [[1]]
+#> [[1]]$url
 #> [1] "http://1.2.3.4/endpoint"
 #> 
-#> $method
+#> [[1]]$method
 #> [1] "post"
 #> 
-#> $headers
-#> $headers$`Content-Type`
+#> [[1]]$headers
+#> [[1]]$headers$`Content-Type`
 #> [1] "application/json"
 #> 
-#> $headers$key
+#> [[1]]$headers$key
 #> [1] "abcdefg"
 ```
 
@@ -51,7 +52,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-#> [1] "Thu Jan 28 10:18:59 2016"
+#> [1] "Thu Jan 28 10:23:26 2016"
 
 test_dir("tests/")
 #> testthat results ========================================================================================================
