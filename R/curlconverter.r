@@ -19,7 +19,7 @@
 #' @return list of data to use in `httr` requests
 #' @export
 straighten <- function(curls=read_clip()) {
-  req <- map(curl, function(x) { .pkgenv$ct$call("curlconverter.toR", x) })
+  req <- map(curls, function(x) { .pkgenv$ct$call("curlconverter.toR", x) })
   req
 }
 
