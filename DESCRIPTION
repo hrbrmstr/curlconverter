@@ -1,8 +1,17 @@
-Package: currl
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
+Package: curlconverter
+Title: Transform 'cURL' Command-line Calls to 'httr' Requests
+Version: 0.1.0.9000
 Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")))
-Description: What the package does (one paragraph).
-Depends: R (>= 3.2.3)
+Description: Transform 'cURL' Command-line Calls to 'httr' Requests.
+Depends:
+    R (>= 3.2.3)
+Imports:
+    V8,
+    purrr,
+    urltools,
+    clipr
 License: AGPL + file LICENSE
 LazyData: true
+Suggests:
+    testthat
+RoxygenNote: 5.0.1

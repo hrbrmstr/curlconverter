@@ -1,0 +1,1 @@
+global.curlconverter = require('curlconverter')
