@@ -1,6 +1,8 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 curlconverter - Generate `httr` functions or parameters for use with `httr` from `cURL` commands.
 
+Based on the [`curlconverter`](https://github.com/NickCarneiro/curlconverter) Node module by Nick Carneiro
+
 The following functions are implemented:
 
 -   `straighten`: generate the data/function
@@ -49,7 +51,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-#> [1] "Thu Jan 28 10:07:54 2016"
+#> [1] "Thu Jan 28 10:18:59 2016"
 
 test_dir("tests/")
 #> testthat results ========================================================================================================
