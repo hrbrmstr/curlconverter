@@ -1,7 +1,6 @@
 ---
 output:
-  md_document:
-    variant: markdown_github
+  rmarkdown::github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -9,7 +8,7 @@ output:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
+  comment = "#",
   fig.path = "README-"
 )
 ```
@@ -19,10 +18,12 @@ Based on the [`curlconverter`](https://github.com/NickCarneiro/curlconverter) No
 
 The following functions are implemented:
 
-- `straighten`: generate the data/function
+- `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
+- `parse_query`: parse URL query parameters into a named list
 
 ### News
 
+- Version 0.3.0 : Added `parse_query`
 - Version 0.2.0 : Added parsed URL to return value of `straighten()`
 - Version 0.1.0 released
 
@@ -49,8 +50,18 @@ toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4Ht
 
 (curl_line <- readLines(system.file("extdata/curl5.txt", package="curlconverter"), warn=FALSE))
 
-toJSON(straighten(curl_line), pretty=TRUE)
+toJSON(straighten(curl_line, quiet=TRUE), pretty=TRUE)
 
+(curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"), warn=FALSE))
+
+# example with query parameters in the body
+req <- straighten(curl_line, quiet=FALSE)
+
+# ugh
+(req[[1]]$data)
+
+#yay!
+toJSON(parse_query(req[[1]]$data), pretty=TRUE)
 ```
 
 ### Test Results

@@ -1,6 +1,6 @@
 Package: curlconverter
 Title: Tools to Transform 'cURL' Command-line Calls to 'httr' Requests
-Version: 0.2.0.9000
+Version: 0.3.0.9000
 Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
              person("Nick", "Carneiro", role = c("ctb")))
 Maintainer: Bob Rudis <bob@rudis.net>
@@ -16,9 +16,11 @@ Depends:
     R (>= 3.0.0)
 Imports:
     V8,
+    curl,
     httr,
     purrr,
-    clipr
+    clipr,
+    stringi
 License: AGPL + file LICENSE
 LazyData: true
 Suggests:

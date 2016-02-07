@@ -4,17 +4,22 @@
 \alias{straighten}
 \title{Processes new cURL request}
 \usage{
-straighten(curls = read_clip())
+straighten(curls = read_clip(), quiet = FALSE)
 }
 \arguments{
-\item{curls}{a character vector of one or more cURL command lines. It will read from the
-clipboard (i.e. if you did a \emph{"Copy as cURL"} from browser developer tools).}
+\item{curls}{a character vector of one or more cURL command lines. It will
+read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
+browser developer tools).}
+
+\item{quiet}{if \code{FALSE}, a \code{message} with the original \code{cURL}
+command line will be output. (Default: \code{FALSE})}
 }
 \value{
-list of data to use in `httr` requests
+list of \code{length(curls)} containing parsed data (i.e. to be used
+         in `httr` requests)
 }
 \description{
-Will eventually have an option to return a function, or function source
-Right now it just returns daa
+Takes in a \emph{"Copy as cURL"} command line and returns a \code{list} of
+components that can be used to build \code{httr} requests.
 }
 
