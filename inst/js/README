@@ -1,0 +1,21 @@
+This is probably obvious, but you need Node installed
+
+You then need browserify installed:
+
+    npm install -g browserify
+
+
+There are two main files you may need to edit (i.e. to handle new command line
+parameters):
+
+  - inst/js/node_modules/curlconverter/util.js or
+  - inst/js/node_modules/curlconverter/generators/r.js
+
+They aren't minified on purpose, and I can't see why you'd want to change others.
+
+When they change, you need to re-run this command line in a shell from the
+inst/js directory:
+
+    browserify in.js > curl-bundle.js
+
+And **rebuild the package** so the new js code is in the package.
