@@ -11,6 +11,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version 0.3.1 : handles `--header` now (fixes \#1)
 -   Version 0.3.0 : Added `parse_query`
 -   Version 0.2.0 : Added parsed URL to return value of `straighten()`
 -   Version 0.1.0 released
@@ -142,7 +143,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Sun Feb  7 08:20:12 2016"
+# [1] "Tue Feb  9 15:07:03 2016"
 
 test_dir("tests/")
 # Warning in c(5L, 5L, 5L, 3L, 4L, 5L, 4L) == sapply(sapply(sapply(list.files(system.file("extdata/", : longer object

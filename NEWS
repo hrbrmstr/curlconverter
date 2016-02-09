@@ -1,3 +1,6 @@
+## 0.3.1
+* Handles --header
+
 ## 0.3.0
 * Added `parse_query`
 
