@@ -1,6 +1,5 @@
 ---
-output:
-  rmarkdown::github_document
+output: rmarkdown::github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -20,9 +19,11 @@ The following functions are implemented:
 
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
 - `parse_query`: parse URL query parameters into a named list
+- `make_req`: turn a cURL command line into an `httr` request
 
 ### News
 
+- Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
 - Version 0.3.1 : handles `--header` now (fixes #1)
 - Version 0.3.0 : Added `parse_query`
 - Version 0.2.0 : Added parsed URL to return value of `straighten()`
@@ -43,6 +44,7 @@ options(width=120)
 ```{r}
 library(curlconverter)
 library(jsonlite)
+library(httr)
 
 # current verison
 packageVersion("curlconverter")
@@ -63,6 +65,30 @@ req <- straighten(curl_line, quiet=FALSE)
 
 #yay!
 toJSON(parse_query(req[[1]]$data), pretty=TRUE)
+```
+
+### Spinning straw into gold
+
+```{r}
+curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=1&function_name=extract_measurements" --compressed')
+
+make_req(curl_line)
+
+VERB(verb = "POST", 
+     url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
+     add_headers(Origin = "http://anasim.iet.unipi.it", 
+                 `Accept-Encoding` = "gzip, deflate", 
+                 `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
+                 `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
+                 Accept = "*/*", 
+                 Referer = "http://anasim.iet.unipi.it/moniqa/", 
+                 `X-Requested-With` = "XMLHttpRequest", 
+                 Connection = "keep-alive"), 
+     body = list(deviceid = "1", 
+                 function_name = "extract_measurements"), 
+     encode = "form") -> tmp
+
+toJSON(content(tmp), pretty=TRUE)
 ```
 
 ### Test Results

@@ -8,7 +8,7 @@
 #'        browser developer tools).
 #' @param quiet if \code{FALSE}, a \code{message} with the original \code{cURL}
 #'        command line will be output. (Default: \code{FALSE})
-#' @return list of \code{length(curls)} containing parsed data (i.e. to be used
+#' @return \code{list} of \code{length(curls)} containing parsed data (i.e. to be used
 #'          in `httr` requests)
 #' @export
 straighten <- function(curls=read_clip(), quiet=FALSE) {
@@ -30,9 +30,9 @@ straighten <- function(curls=read_clip(), quiet=FALSE) {
 parse_query <- function(query) {
   params <- vapply(stri_split_regex(query, "&", omit_empty=TRUE)[[1]],
                    stri_split_fixed, "=", 2, simplify=TRUE,
-                   FUN.VALUE = character(2))
-  set_names(as.list(curl::curl_unescape(params[2, ])),
-                    curl::curl_unescape(params[1, ]))
+                   FUN.VALUE=character(2))
+  set_names(as.list(curl::curl_unescape(params[2,])),
+                    curl::curl_unescape(params[1,]))
 }
 
 process_curl <- function(x) {

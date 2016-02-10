@@ -15,7 +15,7 @@ browser developer tools).}
 command line will be output. (Default: \code{FALSE})}
 }
 \value{
-list of \code{length(curls)} containing parsed data (i.e. to be used
+\code{list} of \code{length(curls)} containing parsed data (i.e. to be used
          in `httr` requests)
 }
 \description{

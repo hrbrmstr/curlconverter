@@ -14,8 +14,8 @@
 #' @name curlconverter
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
-#' @import V8 purrr httr
+#' @import V8 purrr httr formatR
 #' @importFrom clipr read_clip
 #' @importFrom curl curl_unescape
-#' @importFrom stringi stri_split_regex stri_split_fixed
+#' @importFrom stringi stri_split_regex stri_split_fixed stri_detect_regex
 NULL
