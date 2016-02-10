@@ -54,7 +54,7 @@ make_req <- function(curls=read_clip(), quiet=FALSE) {
 
   clipr::write_clip(tmp)
 
-  if (!quiet) cat(tmp)
+  if (!quiet) cat(tmp, "\n")
 
   return(tmp)
 
