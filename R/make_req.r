@@ -1,8 +1,12 @@
 #' Turn a cURL request into an \code{httr} request
 #'
-#' Takes in a \emph{"Copy as cURL"} command line and returns source code
-#' for an \code{httr} \code{VERB} request via the clipboard, function return value
-#' and (optionally) \code{cat}ted to the console.
+#' Takes in a \emph{"Copy as cURL"} command line and returns a "working"
+#' R \code{function} (i.e. a comple, valid \code{VERB()} call that will work
+#' provided the server it's requesting the resource from thinks the call is
+#' valid).
+#'
+#' It also has a side-effect of overwriting the clipboard with the character
+#' contents of the function and will (optionally) \code{cat}ted to the console.
 #'
 #' @param curls a character vector of one cURL command line. It will
 #'        read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
@@ -10,7 +14,12 @@
 #' @param quiet if \code{FALSE}, a \code{message} with the original \code{cURL}
 #'        command line will be output and the created \code{httr} function will
 #'        be \code{cat}ted to the console.. (Default: \code{FALSE})
-#' @return character vector containing a \code{httr} request
+#' @return a working R \code{function}
+#' @examples
+#' \dontrun{
+#'  my_ip <- make_req("curl 'https://httpbin.org/ip'")
+#'  content(my_ip(), as="parsed")
+#' }
 #' @export
 make_req <- function(curls=read_clip(), quiet=FALSE) {
 
@@ -18,7 +27,7 @@ make_req <- function(curls=read_clip(), quiet=FALSE) {
 
   req <- map(curls, process_curl)[[1]]
 
-  template <- "VERB(verb = '%s', url = '%s' %s%s%s)"
+  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s)"
 
   hdrs <- enc <- ""
   if (length(req$headers) > 0) {
@@ -56,6 +65,11 @@ make_req <- function(curls=read_clip(), quiet=FALSE) {
 
   if (!quiet) cat(tmp, "\n")
 
-  return(tmp)
+  f <- function() {}
+  formals(f) <- NULL
+  environment(f) <- parent.frame()
+  body(f) <- as.expression(parse(text=tmp))
+
+  return(f)
 
 }

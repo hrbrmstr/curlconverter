@@ -16,11 +16,22 @@ command line will be output and the created \code{httr} function will
 be \code{cat}ted to the console.. (Default: \code{FALSE})}
 }
 \value{
-character vector containing a \code{httr} request
+a working R \code{function}
 }
 \description{
-Takes in a \emph{"Copy as cURL"} command line and returns source code
-for an \code{httr} \code{VERB} request via the clipboard, function return value
-and (optionally) \code{cat}ted to the console.
+Takes in a \emph{"Copy as cURL"} command line and returns a "working"
+R \code{function} (i.e. a comple, valid \code{VERB()} call that will work
+provided the server it's requesting the resource from thinks the call is
+valid).
+}
+\details{
+It also has a side-effect of overwriting the clipboard with the character
+contents of the function and will (optionally) \code{cat}ted to the console.
+}
+\examples{
+\dontrun{
+ my_ip <- make_req("curl 'https://httpbin.org/ip'")
+ content(my_ip(), as="parsed")
+}
 }
 

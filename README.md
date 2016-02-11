@@ -8,10 +8,11 @@ The following functions are implemented:
 
 -   `straighten`: convert one or more *"Copy as cURL"* command lines into useful data
 -   `parse_query`: parse URL query parameters into a named list
--   `make_req`: turn a cURL command line into an `httr` request
+-   `make_req`: turn a cURL command line into an `httr` request (i.e. returns a working function)
 
 ### News
 
+-   Version 0.5.0 : `make_req` now actually *returns a working/callable R function*
 -   Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
 -   Version 0.3.1 : handles `--header` now (fixes \#1)
 -   Version 0.3.0 : Added `parse_query`
@@ -33,8 +34,34 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.4.0.9000'
+# [1] '0.5.0.9000'
+```
 
+Simple example using a call to <https://httpbin.org/headers>
+
+``` r
+httpbinrhcurl <- "curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed"
+
+show_req_headers <- make_req(httpbinrhcurl, quiet=TRUE)
+res <- show_req_headers()
+toJSON(content(res, as="parsed"), pretty=TRUE)
+# {
+#   "headers": {
+#     "Accept": ["application/json, text/xml, application/xml, */*,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"],
+#     "Accept-Encoding": ["gzip, deflate, sdch"],
+#     "Accept-Language": ["en-US,en;q=0.8"],
+#     "Cache-Control": ["no-cache"],
+#     "Content-Length": ["0"],
+#     "Host": ["httpbin.org"],
+#     "Pragma": ["no-cache"],
+#     "Referer": ["https://httpbin.org/"],
+#     "Upgrade-Insecure-Requests": ["1"],
+#     "User-Agent": ["Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36"]
+#   }
+# }
+```
+
+``` r
 toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed"), pretty=TRUE)
 # curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed
 # [
@@ -144,36 +171,8 @@ toJSON(parse_query(req[[1]]$data), pretty=TRUE)
 ``` r
 curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=1&function_name=extract_measurements" --compressed')
 
-make_req(curl_line)
-# curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=1&function_name=extract_measurements" --compressed
-# VERB(verb = "POST", url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
-#     add_headers(Origin = "http://anasim.iet.unipi.it", 
-#         `Accept-Encoding` = "gzip, deflate", 
-#         `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
-#         `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
-#         Accept = "*/*", Referer = "http://anasim.iet.unipi.it/moniqa/", 
-#         `X-Requested-With` = "XMLHttpRequest", 
-#         Connection = "keep-alive"), 
-#     body = list(deviceid = "1", 
-#         function_name = "extract_measurements"), 
-#     encode = "form")
-# [1] "VERB(verb = \"POST\", url = \"http://anasim.iet.unipi.it/moniqa/php/from_js.php\", \n    add_headers(Origin = \"http://anasim.iet.unipi.it\", \n        `Accept-Encoding` = \"gzip, deflate\", \n        `Accept-Language` = \"it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4\", \n        `User-Agent` = \"Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36\", \n        Accept = \"*/*\", Referer = \"http://anasim.iet.unipi.it/moniqa/\", \n        `X-Requested-With` = \"XMLHttpRequest\", \n        Connection = \"keep-alive\"), \n    body = list(deviceid = \"1\", \n        function_name = \"extract_measurements\"), \n    encode = \"form\") "
-
-VERB(verb = "POST", 
-     url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
-     add_headers(Origin = "http://anasim.iet.unipi.it", 
-                 `Accept-Encoding` = "gzip, deflate", 
-                 `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
-                 `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
-                 Accept = "*/*", 
-                 Referer = "http://anasim.iet.unipi.it/moniqa/", 
-                 `X-Requested-With` = "XMLHttpRequest", 
-                 Connection = "keep-alive"), 
-     body = list(deviceid = "1", 
-                 function_name = "extract_measurements"), 
-     encode = "form") -> tmp
-
-toJSON(content(tmp), pretty=TRUE)
+get_data <- make_req(curl_line, quiet=TRUE)
+toJSON(content(get_data(), as="parsed"), pretty=TRUE)
 # {
 #   "sensors": [
 #     {
@@ -191,362 +190,367 @@ toJSON(content(tmp), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["87"],
+#       "measure": ["5"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454889600000"]
-#     },
-#     {
-#       "measure": ["87"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454889600000"]
-#     },
-#     {
-#       "measure": ["8"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454889600000"]
-#     },
-#     {
-#       "measure": ["56"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454893200000"]
-#     },
-#     {
-#       "measure": ["6"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454893200000"]
-#     },
-#     {
-#       "measure": ["21"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454893200000"]
-#     },
-#     {
-#       "measure": ["22"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454896800000"]
+#       "date": ["1454976000000"]
 #     },
 #     {
 #       "measure": ["0"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454896800000"]
+#       "date": ["1454976000000"]
 #     },
 #     {
-#       "measure": ["59"],
+#       "measure": ["90"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454896800000"]
+#       "date": ["1454976000000"]
 #     },
 #     {
-#       "measure": ["60"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454900400000"]
-#     },
-#     {
-#       "measure": ["25"],
+#       "measure": ["4"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454904000000"]
+#       "date": ["1454979600000"]
 #     },
 #     {
 #       "measure": ["0"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454904000000"]
+#       "date": ["1454979600000"]
 #     },
 #     {
-#       "measure": ["60"],
+#       "measure": ["89"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454904000000"]
+#       "date": ["1454979600000"]
 #     },
 #     {
-#       "measure": ["22"],
+#       "measure": ["7"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454907600000"]
+#       "date": ["1454983200000"]
 #     },
 #     {
-#       "measure": ["0"],
+#       "measure": ["1"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454907600000"]
-#     },
-#     {
-#       "measure": ["62"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454907600000"]
-#     },
-#     {
-#       "measure": ["19"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454911200000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454911200000"]
-#     },
-#     {
-#       "measure": ["67"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454911200000"]
-#     },
-#     {
-#       "measure": ["19"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454914800000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454914800000"]
-#     },
-#     {
-#       "measure": ["69"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454914800000"]
-#     },
-#     {
-#       "measure": ["24"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454918400000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454918400000"]
-#     },
-#     {
-#       "measure": ["68"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454918400000"]
-#     },
-#     {
-#       "measure": ["18"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454922000000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454922000000"]
-#     },
-#     {
-#       "measure": ["80"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454922000000"]
-#     },
-#     {
-#       "measure": ["13"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454925600000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454925600000"]
-#     },
-#     {
-#       "measure": ["84"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454925600000"]
-#     },
-#     {
-#       "measure": ["11"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454929200000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454929200000"]
-#     },
-#     {
-#       "measure": ["84"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454929200000"]
-#     },
-#     {
-#       "measure": ["14"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454932800000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454932800000"]
-#     },
-#     {
-#       "measure": ["82"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454932800000"]
-#     },
-#     {
-#       "measure": ["15"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454936400000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454936400000"]
-#     },
-#     {
-#       "measure": ["80"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454936400000"]
-#     },
-#     {
-#       "measure": ["13"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454940000000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454940000000"]
-#     },
-#     {
-#       "measure": ["80"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454940000000"]
-#     },
-#     {
-#       "measure": ["12"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454943600000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454943600000"]
-#     },
-#     {
-#       "measure": ["82"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454943600000"]
-#     },
-#     {
-#       "measure": ["22"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454947200000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454947200000"]
-#     },
-#     {
-#       "measure": ["68"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454947200000"]
-#     },
-#     {
-#       "measure": ["19"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454950800000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454950800000"]
-#     },
-#     {
-#       "measure": ["75"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454950800000"]
-#     },
-#     {
-#       "measure": ["22"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454954400000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454954400000"]
-#     },
-#     {
-#       "measure": ["72"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454954400000"]
-#     },
-#     {
-#       "measure": ["25"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454958000000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454958000000"]
-#     },
-#     {
-#       "measure": ["71"],
-#       "fk_sensortype": ["3"],
-#       "date": ["1454958000000"]
-#     },
-#     {
-#       "measure": ["19"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1454961600000"]
-#     },
-#     {
-#       "measure": ["0"],
-#       "fk_sensortype": ["2"],
-#       "date": ["1454961600000"]
+#       "date": ["1454983200000"]
 #     },
 #     {
 #       "measure": ["76"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454961600000"]
+#       "date": ["1454983200000"]
 #     },
 #     {
-#       "measure": ["22"],
+#       "measure": ["74"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1454986800000"]
+#     },
+#     {
+#       "measure": ["18"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454965200000"]
+#       "date": ["1454990400000"]
 #     },
 #     {
 #       "measure": ["0"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454965200000"]
+#       "date": ["1454990400000"]
 #     },
 #     {
-#       "measure": ["71"],
+#       "measure": ["67"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454965200000"]
+#       "date": ["1454990400000"]
 #     },
 #     {
-#       "measure": ["10"],
+#       "measure": ["30"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454968800000"]
+#       "date": ["1454994000000"]
 #     },
 #     {
-#       "measure": ["0"],
+#       "measure": ["1"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454968800000"]
+#       "date": ["1454994000000"]
 #     },
 #     {
-#       "measure": ["87"],
+#       "measure": ["49"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454968800000"]
+#       "date": ["1454994000000"]
+#     },
+#     {
+#       "measure": ["49"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1454997600000"]
+#     },
+#     {
+#       "measure": ["4"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1454997600000"]
+#     },
+#     {
+#       "measure": ["29"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1454997600000"]
+#     },
+#     {
+#       "measure": ["65"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455001200000"]
+#     },
+#     {
+#       "measure": ["15"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455001200000"]
+#     },
+#     {
+#       "measure": ["16"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455001200000"]
+#     },
+#     {
+#       "measure": ["63"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455004800000"]
+#     },
+#     {
+#       "measure": ["16"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455004800000"]
+#     },
+#     {
+#       "measure": ["25"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455004800000"]
+#     },
+#     {
+#       "measure": ["41"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455008400000"]
+#     },
+#     {
+#       "measure": ["3"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455008400000"]
+#     },
+#     {
+#       "measure": ["42"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455008400000"]
+#     },
+#     {
+#       "measure": ["34"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455012000000"]
+#     },
+#     {
+#       "measure": ["3"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455012000000"]
+#     },
+#     {
+#       "measure": ["51"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455012000000"]
+#     },
+#     {
+#       "measure": ["27"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455015600000"]
+#     },
+#     {
+#       "measure": ["3"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455015600000"]
+#     },
+#     {
+#       "measure": ["65"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455015600000"]
+#     },
+#     {
+#       "measure": ["15"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455019200000"]
+#     },
+#     {
+#       "measure": ["2"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455019200000"]
+#     },
+#     {
+#       "measure": ["82"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455019200000"]
+#     },
+#     {
+#       "measure": ["19"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455022800000"]
+#     },
+#     {
+#       "measure": ["1"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455022800000"]
+#     },
+#     {
+#       "measure": ["75"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455022800000"]
+#     },
+#     {
+#       "measure": ["21"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455030000000"]
+#     },
+#     {
+#       "measure": ["2"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455030000000"]
+#     },
+#     {
+#       "measure": ["66"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455030000000"]
+#     },
+#     {
+#       "measure": ["27"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455033600000"]
+#     },
+#     {
+#       "measure": ["2"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455033600000"]
+#     },
+#     {
+#       "measure": ["59"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455033600000"]
+#     },
+#     {
+#       "measure": ["48"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455037200000"]
+#     },
+#     {
+#       "measure": ["3"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455037200000"]
+#     },
+#     {
+#       "measure": ["33"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455037200000"]
+#     },
+#     {
+#       "measure": ["69"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455040800000"]
+#     },
+#     {
+#       "measure": ["12"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455040800000"]
+#     },
+#     {
+#       "measure": ["15"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455040800000"]
+#     },
+#     {
+#       "measure": ["63"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455044400000"]
 #     },
 #     {
 #       "measure": ["8"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455044400000"]
+#     },
+#     {
+#       "measure": ["15"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455044400000"]
+#     },
+#     {
+#       "measure": ["54"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1454972400000"]
+#       "date": ["1455048000000"]
+#     },
+#     {
+#       "measure": ["3"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455048000000"]
+#     },
+#     {
+#       "measure": ["27"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455048000000"]
+#     },
+#     {
+#       "measure": ["48"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455051600000"]
+#     },
+#     {
+#       "measure": ["2"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455051600000"]
+#     },
+#     {
+#       "measure": ["31"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455051600000"]
+#     },
+#     {
+#       "measure": ["30"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455055200000"]
+#     },
+#     {
+#       "measure": ["1"],
+#       "fk_sensortype": ["2"],
+#       "date": ["1455055200000"]
+#     },
+#     {
+#       "measure": ["50"],
+#       "fk_sensortype": ["3"],
+#       "date": ["1455055200000"]
+#     },
+#     {
+#       "measure": ["15"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1455058800000"]
 #     },
 #     {
 #       "measure": ["0"],
 #       "fk_sensortype": ["2"],
-#       "date": ["1454972400000"]
+#       "date": ["1455058800000"]
 #     },
 #     {
-#       "measure": ["88"],
+#       "measure": ["64"],
 #       "fk_sensortype": ["3"],
-#       "date": ["1454972400000"]
+#       "date": ["1455058800000"]
 #     },
 #     {
-#       "measure": ["24"],
+#       "measure": ["20"],
 #       "fk_sensortype": ["4"],
-#       "date": ["1454972400000"]
+#       "date": ["1455058800000"]
 #     }
 #   ]
 # }
+```
+
+That also sends this to the console:
+
+``` r
+VERB(verb = "POST", 
+     url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
+     add_headers(Origin = "http://anasim.iet.unipi.it", 
+                 `Accept-Encoding` = "gzip, deflate", 
+                 `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
+                 `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
+                 Accept = "*/*", 
+                 Referer = "http://anasim.iet.unipi.it/moniqa/", 
+                 `X-Requested-With` = "XMLHttpRequest", 
+                 Connection = "keep-alive"), 
+     body = list(deviceid = "1", 
+                 function_name = "extract_measurements"), 
+     encode = "form") -> tmp
+
+toJSON(content(tmp), pretty=TRUE)
 ```
 
 ### Test Results
@@ -556,7 +560,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Tue Feb  9 22:20:01 2016"
+# [1] "Thu Feb 11 05:37:21 2016"
 
 test_dir("tests/")
 # Warning in c(5L, 5L, 5L, 3L, 4L, 5L, 4L) == sapply(sapply(sapply(list.files(system.file("extdata/", : longer object
