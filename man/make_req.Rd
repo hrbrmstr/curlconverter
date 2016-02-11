@@ -2,36 +2,30 @@
 % Please edit documentation in R/make_req.r
 \name{make_req}
 \alias{make_req}
-\title{Turn a cURL request into an \code{httr} request}
+\title{Turn a parsed cURL requests into \code{httr} request functions}
 \usage{
-make_req(curls = read_clip(), quiet = FALSE)
+make_req(x, quiet = TRUE)
 }
 \arguments{
-\item{curls}{a character vector of one cURL command line. It will
-read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
-browser developer tools).}
+\item{x}{a vector of \code{curlcoverter} objects}
 
-\item{quiet}{if \code{FALSE}, a \code{message} with the original \code{cURL}
-command line will be output and the created \code{httr} function will
-be \code{cat}ted to the console.. (Default: \code{FALSE})}
+\item{quiet}{if \code{FALSE}, will cause \code{make_req()} to write complete function
+source code to the console.}
 }
 \value{
-a working R \code{function}
+a \code{list} of working R \code{function}s.
 }
 \description{
-Takes in a \emph{"Copy as cURL"} command line and returns a "working"
-R \code{function} (i.e. a comple, valid \code{VERB()} call that will work
-provided the server it's requesting the resource from thinks the call is
-valid).
-}
-\details{
-It also has a side-effect of overwriting the clipboard with the character
-contents of the function and will (optionally) \code{cat}ted to the console.
+Takes the output of \code{straighten()} and turns the parsed cURL command lines
+into working \code{httr} functions, optionally \code{cat}'ing the text of each function
+to the console.
 }
 \examples{
 \dontrun{
- my_ip <- make_req("curl 'https://httpbin.org/ip'")
- content(my_ip(), as="parsed")
+library(httr)
+library(magrittr)
+ my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
+ content(my_ip[[1]](), as="parsed")
 }
 }
 

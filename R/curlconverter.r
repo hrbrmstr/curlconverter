@@ -11,9 +11,18 @@
 #' @return \code{list} of \code{length(curls)} containing parsed data (i.e. to be used
 #'          in `httr` requests)
 #' @export
+#' @examples
+#' \dontrun{
+#' library(httr)
+#' library(magrittr)
+#'  my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
+#'  content(my_ip[[1]](), as="parsed")
+#' }
 straighten <- function(curls=read_clip(), quiet=FALSE) {
   if (!quiet) message(curls)
-  map(curls, process_curl)
+  obj <- map(curls, process_curl)
+  class(obj) <- c("cc_container", class(obj))
+  obj
 }
 
 #' Split a query string into component parts
@@ -38,5 +47,7 @@ parse_query <- function(query) {
 process_curl <- function(x) {
   req <- .pkgenv$ct$call("curlconverter.toR", x)
   req$url_parts <- unclass(parse_url(req$url))
+  req[["orig_curl"]] <- x
+  class(req) <- c("cc_obj", class(req))
   req
 }

@@ -22,4 +22,12 @@ command line will be output. (Default: \code{FALSE})}
 Takes in a \emph{"Copy as cURL"} command line and returns a \code{list} of
 components that can be used to build \code{httr} requests.
 }
+\examples{
+\dontrun{
+library(httr)
+library(magrittr)
+ my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
+ content(my_ip[[1]](), as="parsed")
+}
+}
 

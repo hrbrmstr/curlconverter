@@ -23,6 +23,7 @@ The following functions are implemented:
 
 ### News
 
+- Version 0.6.0 : changed the idiom (examples below)
 - Version 0.5.0 : `make_req` now actually _returns a working/callable R function_
 - Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
 - Version 0.3.1 : handles `--header` now (fixes #1)
@@ -56,9 +57,14 @@ Simple example using a call to <https://httpbin.org/headers>
 ```{r}
 httpbinrhcurl <- "curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed"
 
-show_req_headers <- make_req(httpbinrhcurl, quiet=TRUE)
-res <- show_req_headers()
-toJSON(content(res, as="parsed"), pretty=TRUE)
+res <- make_req(straighten(httpbinrhcurl))
+
+# or 
+
+straighten(httpbinrhcurl) %>% 
+  make_req() -> res
+
+toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
 ```
 
 ```{r}
@@ -66,7 +72,7 @@ toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4Ht
 
 (curl_line <- readLines(system.file("extdata/curl5.txt", package="curlconverter"), warn=FALSE))
 
-toJSON(straighten(curl_line, quiet=TRUE), pretty=TRUE)
+toJSON(straighten(curl_line), pretty=TRUE)
 
 (curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"), warn=FALSE))
 
@@ -85,8 +91,10 @@ toJSON(parse_query(req[[1]]$data), pretty=TRUE)
 ```{r}
 curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=1&function_name=extract_measurements" --compressed')
 
-get_data <- make_req(curl_line, quiet=TRUE)
-toJSON(content(get_data(), as="parsed"), pretty=TRUE)
+straighten(curl_line) %>% 
+  make_req() -> get_data
+
+toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 ```
 
 That also sends this to the console:
