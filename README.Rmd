@@ -19,10 +19,11 @@ The following functions are implemented:
 
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
 - `parse_query`: parse URL query parameters into a named list
-- `make_req`: turn a cURL command line into an `httr` request (i.e. returns a working function)
+- `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
 
 ### News
 
+- Version 0.6.1 Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
 - Version 0.6.0 : changed the idiom (examples below)
 - Version 0.5.0 : `make_req` now actually _returns a working/callable R function_
 - Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
@@ -52,7 +53,7 @@ library(httr)
 packageVersion("curlconverter")
 ```
 
-Simple example using a call to <https://httpbin.org/headers>
+Simple example using a call to <https://httpbin.org/headers>:
 
 ```{r}
 httpbinrhcurl <- "curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed"
@@ -67,13 +68,18 @@ straighten(httpbinrhcurl) %>%
 toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
 ```
 
+Slightly more complex one:
+
 ```{r}
 toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed"), pretty=TRUE)
+```
 
+There are some built-in test files you can play with:
+
+```{r}
 (curl_line <- readLines(system.file("extdata/curl5.txt", package="curlconverter"), warn=FALSE))
 
-toJSON(straighten(curl_line), pretty=TRUE)
-
+toJSON(straighten(curl_line, quiet=TRUE), pretty=TRUE)
 (curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"), warn=FALSE))
 
 # example with query parameters in the body
@@ -86,10 +92,10 @@ req <- straighten(curl_line, quiet=FALSE)
 toJSON(parse_query(req[[1]]$data), pretty=TRUE)
 ```
 
-### Spinning straw into gold
+Spinning straw into gold
 
 ```{r}
-curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=1&function_name=extract_measurements" --compressed')
+curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Origin: http://anasim.iet.unipi.it" -H "Accept-Encoding: gzip, deflate" -H "Accept-Language: it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4" -H "User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" -H "Accept: */*" -H "Referer: http://anasim.iet.unipi.it/moniqa/" -H "X-Requested-With: XMLHttpRequest" -H "Connection: keep-alive" --data "deviceid=65&function_name=extract_measurements" --compressed')
 
 straighten(curl_line) %>% 
   make_req() -> get_data
@@ -112,9 +118,7 @@ VERB(verb = "POST",
                  Connection = "keep-alive"), 
      body = list(deviceid = "1", 
                  function_name = "extract_measurements"), 
-     encode = "form") -> tmp
-
-toJSON(content(tmp), pretty=TRUE)
+     encode = "form")
 ```
 
 ### Test Results

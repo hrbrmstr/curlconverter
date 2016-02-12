@@ -1,4 +1,4 @@
-#' Turn a parsed cURL requests into \code{httr} request functions
+#' Turn parsed cURL command lines into \code{httr} request functions
 #'
 #' Takes the output of \code{straighten()} and turns the parsed cURL command lines
 #' into working \code{httr} functions, optionally \code{cat}'ing the text of each function
