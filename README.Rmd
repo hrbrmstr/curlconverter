@@ -15,6 +15,13 @@ curlconverter - Generate `httr` functions or parameters for use with `httr` from
 
 Based on the [`curlconverter`](https://github.com/NickCarneiro/curlconverter) Node module by Nick Carneiro
 
+### Why `curlconverter`?
+
+Deciphering web/`REST` API and XHR calls can be tricky, which is one reason why
+internet browsers provide _"Copy as cURL"_ functionality within their "Developer Tools"
+pane(s). These `cURL` command-lines can be difficult to wrangle into an `httr::GET` or
+`httr:POST` request, but you can now "straighten" these "cURLs"" either from data copied to the system clipboard or by passing in a vector of cURL command-lines and getting back a list of parameter elements which can be used to form `httr` requests. These lists can be passed to another function to automagically make `httr` functions.
+
 The following functions are implemented:
 
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
@@ -23,6 +30,7 @@ The following functions are implemented:
 
 ### News
 
+- Version 0.6.6 : Code cleanup & documentation update
 - Version 0.6.5 : Reads & sets cookies
 - Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
 - Version 0.6.0 : changed the idiom (examples below)
@@ -136,4 +144,5 @@ test_dir("tests/")
 ### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). 
+
 By participating in this project you agree to abide by its terms.

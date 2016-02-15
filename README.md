@@ -4,6 +4,10 @@ curlconverter - Generate `httr` functions or parameters for use with `httr` from
 
 Based on the [`curlconverter`](https://github.com/NickCarneiro/curlconverter) Node module by Nick Carneiro
 
+### Why `curlconverter`?
+
+Deciphering web/`REST` API and XHR calls can be tricky, which is one reason why internet browsers provide *"Copy as cURL"* functionality within their "Developer Tools" pane(s). These `cURL` command-lines can be difficult to wrangle into an `httr::GET` or `httr:POST` request, but you can now "straighten" these "cURLs"" either from data copied to the system clipboard or by passing in a vector of cURL command-lines and getting back a list of parameter elements which can be used to form `httr` requests. These lists can be passed to another function to automagically make `httr` functions.
+
 The following functions are implemented:
 
 -   `straighten`: convert one or more *"Copy as cURL"* command lines into useful data
@@ -12,6 +16,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version 0.6.6 : Code cleanup & documentation update
 -   Version 0.6.5 : Reads & sets cookies
 -   Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
 -   Version 0.6.0 : changed the idiom (examples below)
@@ -37,7 +42,7 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.6.1.9000'
+# [1] '0.6.6.9000'
 ```
 
 Simple example using a call to <https://httpbin.org/headers>:
@@ -210,24 +215,24 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["91"],
+#       "measure": ["71"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1455145200000"]
+#       "date": ["1455404400000"]
 #     },
 #     {
-#       "measure": ["24"],
+#       "measure": ["18"],
 #       "fk_sensortype": ["4"],
-#       "date": ["1455145200000"]
+#       "date": ["1455404400000"]
 #     },
 #     {
-#       "measure": ["13"],
+#       "measure": ["9"],
 #       "fk_sensortype": ["6"],
-#       "date": ["1455145200000"]
+#       "date": ["1455404400000"]
 #     },
 #     {
-#       "measure": ["0.7"],
+#       "measure": ["0.5"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1455145200000"]
+#       "date": ["1455404400000"]
 #     }
 #   ]
 # }
@@ -258,7 +263,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Mon Feb 15 06:47:37 2016"
+# [1] "Mon Feb 15 10:27:14 2016"
 
 test_dir("tests/")
 # testthat results ========================================================================================================
@@ -267,4 +272,6 @@ test_dir("tests/")
 
 ### Code of Conduct
 
-Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
+
+By participating in this project you agree to abide by its terms.

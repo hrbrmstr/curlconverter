@@ -2,7 +2,7 @@
 % Please edit documentation in R/curlconverter.r
 \name{straighten}
 \alias{straighten}
-\title{Processes new cURL request}
+\title{Processes cURL command-line requests}
 \usage{
 straighten(curls = read_clip(), quiet = FALSE)
 }
@@ -20,14 +20,22 @@ command line will be output. (Default: \code{FALSE})}
 }
 \description{
 Takes in a \emph{"Copy as cURL"} command line and returns a \code{list} of
-components that can be used to build \code{httr} requests.
+components that can be used to build \code{httr} requests or passed to
+\code{\link{make_req}()} to automagically make an \code{httr}
+\code{\link[httr]{VERB}()} function.
 }
 \examples{
 \dontrun{
 library(httr)
-library(magrittr)
- my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
- content(my_ip[[1]](), as="parsed")
+my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
+content(my_ip[[1]](), as="parsed")
 }
+}
+\references{
+\href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
+            \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
+}
+\seealso{
+\code{\link{make_req}()}, \code{httr} \code{\link[httr]{VERB}()}
 }
 

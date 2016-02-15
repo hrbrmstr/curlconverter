@@ -1,85 +1,27 @@
 #' Turn parsed cURL command lines into \code{httr} request functions
 #'
-#' Takes the output of \code{straighten()} and turns the parsed cURL command lines
-#' into working \code{httr} functions, optionally \code{cat}'ing the text of each function
-#' to the console.
+#' Takes the output of \code{\link{straighten}()} and turns the parsed cURL command lines
+#' into working \code{httr} \code{\link[httr]{VERB}()} functions, optionally \code{cat}'ing the text of each function
+#' to the console and/or replacing the system clipboard with the source code for the function.
 #'
 #' @param x a vector of \code{curlcoverter} objects
 #' @param quiet if \code{FALSE}, will cause \code{make_req()} to write complete function
 #'        source code to the console.
+#' @param add_clip if \code{TRUE}, will overwrite the system clipboard with the
+#'        character string contents of the last newly made `httr::VERB` function (i.e.
+#'        this is intended to be used in a workflow where only one cURL command line
+#'        is being processed). Defaults to \code{TRUE} if \code{length(x)} is \code{1}
 #' @return a \code{list} of working R \code{function}s.
+#' @seealso \code{\link{straighten}()}, \code{httr} \code{\link[httr]{VERB}()}
+#' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
+#'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
 #' @examples
 #' \dontrun{
 #' library(httr)
-#' library(magrittr)
-#'  my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
-#'  content(my_ip[[1]](), as="parsed")
+#' my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
+#' content(my_ip[[1]](), as="parsed")
 #' }
 #' @export
-make_req <- function(x, quiet=TRUE) {
-  req <- map(x, create_httr_function, quiet=quiet)
-}
-
-create_httr_function <- function(req, quiet=TRUE) {
-
-  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s)"
-
-  hdrs <- enc <- ""
-
-  if (length(req$headers) > 0) {
-
-    # try to determine encoding
-
-    ct_idx <- which(grepl("content-type", names(req$headers), ignore.case=TRUE))
-
-    if (length(ct_idx) > 0) {
-
-      ct <- req$headers[[ct_idx]]
-
-      req$headers[[ct_idx]] <- NULL
-
-      if (stri_detect_regex(ct, "multipart")) enc <- ", encode = 'multipart'"
-      if (stri_detect_regex(ct, "form")) enc <- ", encode = 'form'"
-      if (stri_detect_regex(ct, "json")) enc <- ", encode = 'json'"
-
-    }
-
-    hdrs <- paste0(capture.output(dput(req$headers,  control=NULL)),
-                   collapse="")
-    hdrs <- sub("^list", ", add_headers", hdrs)
-
-  }
-
-  bdy <- ""
-  if (length(req$data) > 0) {
-    bdy_bits <- paste0(capture.output(dput(parse_query(req$data), control=NULL)),
-                       collapse="")
-    bdy <- sprintf(", body = %s", bdy_bits)
-  }
-
-  ckies <- ""
-  if (length(req$cookies) > 0) {
-    ckies <- paste0(capture.output(dput(req$cookies, control=NULL)),
-                   collapse="")
-    ckies <- sub("^list", ", set_cookies", ckies)
-  }
-
-  out <- sprintf(template, toupper(req$method), req$url, hdrs, ckies, bdy, enc)
-
-  fil <- tempfile(fileext=".R")
-  tidy_source(text=out, width.cutoff=30, indent=4, file=fil)
-  tmp <- paste0(readLines(fil), collapse="\n")
-  unlink(fil)
-
-  clipr::write_clip(tmp)
-
-  if (!quiet) cat(tmp, "\n")
-
-  f <- function() {}
-  formals(f) <- NULL
-  environment(f) <- parent.frame()
-  body(f) <- as.expression(parse(text=tmp))
-
-  return(f)
-
+make_req <- function(x, quiet=TRUE, add_clip=(length(x)==1)) {
+  req <- purrr::map(x, create_httr_function, quiet=quiet, add_clip=add_clip)
 }

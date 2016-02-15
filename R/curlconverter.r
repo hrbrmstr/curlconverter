@@ -1,7 +1,9 @@
-#' Processes new cURL request
+#' Processes cURL command-line requests
 #'
 #' Takes in a \emph{"Copy as cURL"} command line and returns a \code{list} of
-#' components that can be used to build \code{httr} requests.
+#' components that can be used to build \code{httr} requests or passed to
+#' \code{\link{make_req}()} to automagically make an \code{httr}
+#' \code{\link[httr]{VERB}()} function.
 #'
 #' @param curls a character vector of one or more cURL command lines. It will
 #'        read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
@@ -10,44 +12,19 @@
 #'        command line will be output. (Default: \code{FALSE})
 #' @return \code{list} of \code{length(curls)} containing parsed data (i.e. to be used
 #'          in `httr` requests)
+#' @seealso \code{\link{make_req}()}, \code{httr} \code{\link[httr]{VERB}()}
+#' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
+#'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
 #' @export
 #' @examples
 #' \dontrun{
 #' library(httr)
-#' library(magrittr)
-#'  my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
-#'  content(my_ip[[1]](), as="parsed")
+#' my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
+#' content(my_ip[[1]](), as="parsed")
 #' }
 straighten <- function(curls=read_clip(), quiet=FALSE) {
   if (!quiet) message(curls)
-  obj <- map(curls, process_curl)
+  obj <- purrr::map(curls, process_curl)
   class(obj) <- c("cc_container", class(obj))
   obj
-}
-
-#' Split a query string into component parts
-#'
-#' While \link{straighten} will returns parsed \code{GET} query string
-#' parameters there are times (i.e. in HTML \code{<form>} processing) when
-#' the body of the request contains a URL encoded query string as well.
-#'
-#' This function will take any query string and return a named list of
-#' the paremters. Both the names and values will be URL decoded.
-#'
-#' @param query query string to decode
-#' @export
-parse_query <- function(query) {
-  params <- vapply(stri_split_regex(query, "&", omit_empty=TRUE)[[1]],
-                   stri_split_fixed, "=", 2, simplify=TRUE,
-                   FUN.VALUE=character(2))
-  set_names(as.list(curl::curl_unescape(params[2,])),
-                    curl::curl_unescape(params[1,]))
-}
-
-process_curl <- function(x) {
-  req <- .pkgenv$ct$call("curlconverter.toR", x)
-  req$url_parts <- unclass(parse_url(req$url))
-  req[["orig_curl"]] <- x
-  class(req) <- c("cc_obj", class(req))
-  req
 }

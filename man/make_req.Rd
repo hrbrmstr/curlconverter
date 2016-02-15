@@ -2,30 +2,41 @@
 % Please edit documentation in R/make_req.r
 \name{make_req}
 \alias{make_req}
-\title{Turn a parsed cURL requests into \code{httr} request functions}
+\title{Turn parsed cURL command lines into \code{httr} request functions}
 \usage{
-make_req(x, quiet = TRUE)
+make_req(x, quiet = TRUE, add_clip = (length(x) == 1))
 }
 \arguments{
 \item{x}{a vector of \code{curlcoverter} objects}
 
 \item{quiet}{if \code{FALSE}, will cause \code{make_req()} to write complete function
 source code to the console.}
+
+\item{add_clip}{if \code{TRUE}, will overwrite the system clipboard with the
+character string contents of the last newly made `httr::VERB` function (i.e.
+this is intended to be used in a workflow where only one cURL command line
+is being processed). Defaults to \code{TRUE} if \code{length(x)} is \code{1}}
 }
 \value{
 a \code{list} of working R \code{function}s.
 }
 \description{
-Takes the output of \code{straighten()} and turns the parsed cURL command lines
-into working \code{httr} functions, optionally \code{cat}'ing the text of each function
-to the console.
+Takes the output of \code{\link{straighten}()} and turns the parsed cURL command lines
+into working \code{httr} \code{\link[httr]{VERB}()} functions, optionally \code{cat}'ing the text of each function
+to the console and/or replacing the system clipboard with the source code for the function.
 }
 \examples{
 \dontrun{
 library(httr)
-library(magrittr)
- my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
- content(my_ip[[1]](), as="parsed")
+my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
+content(my_ip[[1]](), as="parsed")
 }
+}
+\references{
+\href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
+            \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
+}
+\seealso{
+\code{\link{straighten}()}, \code{httr} \code{\link[httr]{VERB}()}
 }
 
