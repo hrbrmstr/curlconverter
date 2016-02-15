@@ -12,7 +12,8 @@ The following functions are implemented:
 
 ### News
 
--   Version 0.6.1 Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
+-   Version 0.6.5 : Reads & sets cookies
+-   Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
 -   Version 0.6.0 : changed the idiom (examples below)
 -   Version 0.5.0 : `make_req` now actually *returns a working/callable R function*
 -   Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
@@ -209,24 +210,24 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["68"],
+#       "measure": ["91"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1455058800000"]
+#       "date": ["1455145200000"]
 #     },
 #     {
-#       "measure": ["21"],
+#       "measure": ["24"],
 #       "fk_sensortype": ["4"],
-#       "date": ["1455058800000"]
+#       "date": ["1455145200000"]
 #     },
 #     {
-#       "measure": ["6"],
+#       "measure": ["13"],
 #       "fk_sensortype": ["6"],
-#       "date": ["1455058800000"]
+#       "date": ["1455145200000"]
 #     },
 #     {
-#       "measure": ["0.3"],
+#       "measure": ["0.7"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1455058800000"]
+#       "date": ["1455145200000"]
 #     }
 #   ]
 # }
@@ -257,7 +258,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Fri Feb 12 07:13:10 2016"
+# [1] "Mon Feb 15 06:47:37 2016"
 
 test_dir("tests/")
 # testthat results ========================================================================================================

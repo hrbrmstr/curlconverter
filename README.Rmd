@@ -23,7 +23,8 @@ The following functions are implemented:
 
 ### News
 
-- Version 0.6.1 Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
+- Version 0.6.5 : Reads & sets cookies
+- Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
 - Version 0.6.0 : changed the idiom (examples below)
 - Version 0.5.0 : `make_req` now actually _returns a working/callable R function_
 - Version 0.4.0 : `make_req` turns the cURLs into `httr` requests

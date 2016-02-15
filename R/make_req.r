@@ -22,15 +22,17 @@ make_req <- function(x, quiet=TRUE) {
 
 create_httr_function <- function(req, quiet=TRUE) {
 
-  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s)"
+  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s)"
 
   hdrs <- enc <- ""
 
   if (length(req$headers) > 0) {
 
+    # try to determine encoding
+
     ct_idx <- which(grepl("content-type", names(req$headers), ignore.case=TRUE))
 
-        if (length(ct_idx) > 0) {
+    if (length(ct_idx) > 0) {
 
       ct <- req$headers[[ct_idx]]
 
@@ -55,7 +57,14 @@ create_httr_function <- function(req, quiet=TRUE) {
     bdy <- sprintf(", body = %s", bdy_bits)
   }
 
-  out <- sprintf(template, toupper(req$method), req$url, hdrs, bdy, enc)
+  ckies <- ""
+  if (length(req$cookies) > 0) {
+    ckies <- paste0(capture.output(dput(req$cookies, control=NULL)),
+                   collapse="")
+    ckies <- sub("^list", ", set_cookies", ckies)
+  }
+
+  out <- sprintf(template, toupper(req$method), req$url, hdrs, ckies, bdy, enc)
 
   fil <- tempfile(fileext=".R")
   tidy_source(text=out, width.cutoff=30, indent=4, file=fil)
