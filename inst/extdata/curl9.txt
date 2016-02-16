@@ -1,0 +1,1 @@
+curl -v -X GET 'https://api.owler.com/v1/company/basicsearch?q=facebook&fields=name&format=json' -H 'user_key:XXXXX' -k

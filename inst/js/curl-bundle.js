@@ -360,7 +360,10 @@ var parseCurlCommand = function(curlCommand) {
     var url = parsedArguments._[1];
     var headers = null;
     if (parsedArguments.H) {
-        if (headers === null) { headers = {} ; }
+      if (headers === null) { headers = {} ; }
+        if (typeof(parsedArguments.H) === 'string') {
+          parsedArguments.H = [ parsedArguments.H ];
+        }
         parsedArguments.H.forEach(function (header) {
             if (header.indexOf('Cookie') !== -1) {
                 cookieString = header;
@@ -372,8 +375,12 @@ var parseCurlCommand = function(curlCommand) {
             }
         });
     }
+
     if (parsedArguments.header) {
         if (headers === null) { headers = {} ; }
+        if (typeof(parsedArguments.header) === 'string') {
+          parsedArguments.header = [ parsedArguments.header ];
+        }
         parsedArguments.header.forEach(function (header) {
             if (header.indexOf('Cookie') !== -1) {
                 cookieString = header;

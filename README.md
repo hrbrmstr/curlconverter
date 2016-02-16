@@ -16,6 +16,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes \#4 (added this to the test suite)
 -   Version 0.6.6 : Code cleanup & documentation update
 -   Version 0.6.5 : Reads & sets cookies
 -   Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
@@ -42,7 +43,7 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.6.6.9000'
+# [1] '0.6.7.9000'
 ```
 
 Simple example using a call to <https://httpbin.org/headers>:
@@ -215,24 +216,24 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["71"],
+#       "measure": ["47"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1455404400000"]
+#       "date": ["1455490800000"]
 #     },
 #     {
-#       "measure": ["18"],
+#       "measure": ["11"],
 #       "fk_sensortype": ["4"],
-#       "date": ["1455404400000"]
+#       "date": ["1455490800000"]
 #     },
 #     {
-#       "measure": ["9"],
+#       "measure": ["7"],
 #       "fk_sensortype": ["6"],
-#       "date": ["1455404400000"]
+#       "date": ["1455490800000"]
 #     },
 #     {
-#       "measure": ["0.5"],
+#       "measure": ["0.6"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1455404400000"]
+#       "date": ["1455490800000"]
 #     }
 #   ]
 # }
@@ -263,7 +264,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Mon Feb 15 10:27:14 2016"
+# [1] "Tue Feb 16 09:19:05 2016"
 
 test_dir("tests/")
 # testthat results ========================================================================================================
