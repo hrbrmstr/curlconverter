@@ -2,6 +2,7 @@
 process_curl <- function(x) {
   req <- .pkgenv$ct$call("curlconverter.toR", x)
   req$url_parts <- unclass(parse_url(req$url))
+  class(req$url_parts) <- c("url", class(url))
   req[["orig_curl"]] <- x
   class(req) <- c("cc_obj", class(req))
   req
@@ -9,7 +10,7 @@ process_curl <- function(x) {
 
 
 # create one httr function from one cURL request processed with process_curl()
-create_httr_function <- function(req, quiet=TRUE, add_clip=TRUE) {
+create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE) {
 
   template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s)"
 
@@ -37,7 +38,7 @@ create_httr_function <- function(req, quiet=TRUE, add_clip=TRUE) {
 
     hdrs <- paste0(capture.output(dput(req$headers,  control=NULL)),
                    collapse="")
-    hdrs <- sub("^list", ", add_headers", hdrs)
+    hdrs <- sub("^list", ", httr::add_headers", hdrs)
 
   }
 
@@ -50,10 +51,13 @@ create_httr_function <- function(req, quiet=TRUE, add_clip=TRUE) {
   if (length(req$cookies) > 0) {
     ckies <- paste0(capture.output(dput(req$cookies, control=NULL)),
                     collapse="")
-    ckies <- sub("^list", ", set_cookies", ckies)
+    ckies <- sub("^list", ", httr::set_cookies", ckies)
   }
 
-  out <- sprintf(template, toupper(req$method), req$url, hdrs, ckies, bdy, enc)
+  REQ_URL <- req$url
+  if (use_parts) REQ_URL <- httr::build_url(req$url_parts)
+
+  out <- sprintf(template, toupper(req$method), REQ_URL, hdrs, ckies, bdy, enc)
 
   # this does a half-decent job formatting the R function text
   fil <- tempfile(fileext=".R")

@@ -1,3 +1,15 @@
+## 0.7.0
+* calls to `add_headers` & `set_cookies` now have an `httr::` prefix so it's not
+  necessary to load `httr`
+* the `url_parts` slot of the return value of `straighten()` is classed as
+  `url` so `httr::build_url()` can create a URL from it. see next bullet
+  for why.
+* `make_req()` has a new parameter - `use_parts`. If `TRUE` it will call
+  `httr::build_url()` on the `url_parts` slot of the return value of
+  `straighten()` vs use the passed-in cURL URL. This means you can
+  modify the `url_parts` before calling `make_req()`. This is `FALSE` by
+  default.
+
 ## 0.6.7
 * Fixed bug in js module that caused the header parsing to fail if
   there was only one header (Fixes #4)

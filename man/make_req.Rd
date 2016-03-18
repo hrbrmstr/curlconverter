@@ -4,10 +4,15 @@
 \alias{make_req}
 \title{Turn parsed cURL command lines into \code{httr} request functions}
 \usage{
-make_req(x, quiet = TRUE, add_clip = (length(x) == 1))
+make_req(x, use_parts = FALSE, quiet = TRUE, add_clip = (length(x) == 1))
 }
 \arguments{
 \item{x}{a vector of \code{curlcoverter} objects}
+
+\item{use_parts}{logical. If \code{TRUE}, the request function will be generated
+from the "URL parts" that are created as a result of the call to
+\code{\link{straighten}}. This is useful if you want to modify the
+URL parts before calling \code{make_req}. Default: \code{FALSE}.}
 
 \item{quiet}{if \code{FALSE}, will cause \code{make_req()} to write complete function
 source code to the console.}

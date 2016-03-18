@@ -11,6 +11,10 @@
 #'        character string contents of the last newly made `httr::VERB` function (i.e.
 #'        this is intended to be used in a workflow where only one cURL command line
 #'        is being processed). Defaults to \code{TRUE} if \code{length(x)} is \code{1}
+#' @param use_parts logical. If \code{TRUE}, the request function will be generated
+#'        from the "URL parts" that are created as a result of the call to
+#'        \code{\link{straighten}}. This is useful if you want to modify the
+#'        URL parts before calling \code{make_req}. Default: \code{FALSE}.
 #' @return a \code{list} of working R \code{function}s.
 #' @seealso \code{\link{straighten}()}, \code{httr} \code{\link[httr]{VERB}()}
 #' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
@@ -22,6 +26,10 @@
 #' content(my_ip[[1]](), as="parsed")
 #' }
 #' @export
-make_req <- function(x, quiet=TRUE, add_clip=(length(x)==1)) {
-  req <- purrr::map(x, create_httr_function, quiet=quiet, add_clip=add_clip)
+make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
+  req <- purrr::map(x,
+                    create_httr_function,
+                    use_parts=use_parts,
+                    quiet=quiet,
+                    add_clip=add_clip)
 }

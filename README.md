@@ -16,6 +16,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version 0.7.0 : See `NEWS` file.
 -   Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes \#4 (added this to the test suite)
 -   Version 0.6.6 : Code cleanup & documentation update
 -   Version 0.6.5 : Reads & sets cookies
@@ -43,7 +44,7 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.6.7.9000'
+# [1] '0.7.0.9000'
 ```
 
 Simple example using a call to <https://httpbin.org/headers>:
@@ -102,34 +103,7 @@ toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4Ht
 #       "sfhabit": ["asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14"],
 #       "ScrollY": ["0"]
 #     },
-#     "url_parts": {
-#       "scheme": ["http"],
-#       "hostname": ["financials.morningstar.com"],
-#       "port": {},
-#       "path": ["ajax/ReportProcess4HtmlAjax.html"],
-#       "query": {
-#         "1": [""],
-#         "t": ["XNAS:MSFT"],
-#         "region": ["usa"],
-#         "culture": ["en-US"],
-#         "cur": [""],
-#         "reportType": ["is"],
-#         "period": ["12"],
-#         "dataType": ["A"],
-#         "order": ["asc"],
-#         "columnYear": ["5"],
-#         "curYearPart": ["1st5year"],
-#         "rounding": ["3"],
-#         "view": ["raw"],
-#         "r": ["973302"],
-#         "callback": ["jsonp1454021128757"],
-#         "_": ["1454021129337"]
-#       },
-#       "params": {},
-#       "fragment": {},
-#       "username": {},
-#       "password": {}
-#     },
+#     "url_parts": ["structure(list(scheme = \"http\", hostname = \"financials.morningstar.com\", ", "    port = NULL, path = \"ajax/ReportProcess4HtmlAjax.html\", query = structure(list(", "        \"\", t = \"XNAS:MSFT\", region = \"usa\", culture = \"en-US\", ", "        cur = \"\", reportType = \"is\", period = \"12\", dataType = \"A\", ", "        order = \"asc\", columnYear = \"5\", curYearPart = \"1st5year\", ", "        rounding = \"3\", view = \"raw\", r = \"973302\", callback = \"jsonp1454021128757\", ", "        \"_\" = \"1454021129337\"), .Names = c(\"\", \"t\", \"region\", ", "    \"culture\", \"cur\", \"reportType\", \"period\", \"dataType\", \"order\", ", "    \"columnYear\", \"curYearPart\", \"rounding\", \"view\", \"r\", \"callback\", ", "    \"_\")), params = NULL, fragment = NULL, username = NULL, password = NULL), .Names = c(\"scheme\", ", "\"hostname\", \"port\", \"path\", \"query\", \"params\", \"fragment\", \"username\", ", "\"password\"), class = \"function\")"],
 #     "orig_curl": ["curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed"]
 #   }
 # ]
@@ -150,17 +124,7 @@ toJSON(straighten(curl_line, quiet=TRUE), pretty=TRUE)
 #       "Content-Type": ["application/json"],
 #       "key": ["abcdefg"]
 #     },
-#     "url_parts": {
-#       "scheme": ["http"],
-#       "hostname": ["1.2.3.4"],
-#       "port": {},
-#       "path": ["endpoint"],
-#       "query": {},
-#       "params": {},
-#       "fragment": {},
-#       "username": {},
-#       "password": {}
-#     },
+#     "url_parts": ["structure(list(scheme = \"http\", hostname = \"1.2.3.4\", port = NULL, ", "    path = \"endpoint\", query = NULL, params = NULL, fragment = NULL, ", "    username = NULL, password = NULL), .Names = c(\"scheme\", \"hostname\", ", "\"port\", \"path\", \"query\", \"params\", \"fragment\", \"username\", \"password\"", "), class = \"function\")"],
 #     "orig_curl": ["curl -i -X POST http://1.2.3.4/endpoint -H \"Content-Type:application/json\" -H 'key:abcdefg'"]
 #   }
 # ]
@@ -216,24 +180,24 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["47"],
+#       "measure": ["22"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1455490800000"]
+#       "date": ["1458082800000"]
 #     },
 #     {
-#       "measure": ["11"],
+#       "measure": ["12"],
 #       "fk_sensortype": ["4"],
-#       "date": ["1455490800000"]
+#       "date": ["1458082800000"]
 #     },
 #     {
 #       "measure": ["7"],
 #       "fk_sensortype": ["6"],
-#       "date": ["1455490800000"]
+#       "date": ["1458082800000"]
 #     },
 #     {
-#       "measure": ["0.6"],
+#       "measure": ["0.4"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1455490800000"]
+#       "date": ["1458082800000"]
 #     }
 #   ]
 # }
@@ -264,7 +228,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Tue Feb 16 09:19:05 2016"
+# [1] "Thu Mar 17 21:52:15 2016"
 
 test_dir("tests/")
 # testthat results ========================================================================================================
