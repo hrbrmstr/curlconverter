@@ -21,6 +21,7 @@
 #' @importFrom curl curl_unescape
 #' @importFrom jsonlite toJSON
 #' @importFrom stringi stri_split_regex stri_split_fixed stri_detect_regex
+#' @importFrom utils capture.output
 NULL
 
 
