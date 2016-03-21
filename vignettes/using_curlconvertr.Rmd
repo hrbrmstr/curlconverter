@@ -51,7 +51,11 @@ That also shows the output. The components will be familiar to anyone working wi
 
 Many developers will probably stop at this decomposition state since they'll have the information they need. However, you might want to check out the `make_req()` function as it will take the output of `straighten` and actually build a callable function and place the source code for the function onto the system clipboard (if there's only one cURL parsed object to process).
 
-```{r req}
+```{r req1, echo=FALSE}
+req <- make_req(cURL, add_clip=FALSE)
+
+```
+```{r req2, eval=FALSE}
 req <- make_req(cURL)
 ```
 
