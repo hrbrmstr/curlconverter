@@ -1,0 +1,2 @@
+for (var k in global.curlconverter) k ;
+Object.keys(global.curlconverter)

@@ -1,4 +1,4 @@
-context("basic functionality")
+context("cURL processing")
 test_that("we can do something", {
 
   expect_that(all(c(6L, 6L, 6L, 4L, 5L, 6L, 5L, 6L, 5L) ==
