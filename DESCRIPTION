@@ -1,16 +1,16 @@
 Package: curlconverter
 Title: Tools to Transform 'cURL' Command-line Calls to 'httr' Requests
-Version: 0.7.0.9000
+Version: 0.7.0
 Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
              person("Nick", "Carneiro", role = c("ctb")))
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason
     why internet browsers provide "Copy as cURL" functionality within their "Developer Tools"
     pane(s). These 'cURL' command-lines can be difficult to wrangle into an 'httr' 'GET' or
-    'POST' request, but you can now "straighten" these 'cURLs' either from data copies to the
+    'POST' request, but you can now "straighten" these 'cURLs' either from data copied to the
     system clipboard or by passing in a vector of 'cURL' command-lines and getting back a
     list of parameter elements which can be used to form 'httr' requests. You can also make a
-    complete/working/callable 'httr::VERB' funtion.
+    complete/working/callable 'httr::VERB' function right from the tools provided.
 Depends:
     R (>= 3.0.0)
 Imports:

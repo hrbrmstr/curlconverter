@@ -4,5 +4,5 @@
 ^README-.*\.png$
 ^\.travis\.yml$
 ^CONDUCT\.md$
-^README\.md$
 ^inst/js/node_modules/
+^cran-comments\.md$
