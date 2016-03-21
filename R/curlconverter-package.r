@@ -19,6 +19,7 @@
 #' @importFrom purrr map map_df flatten flatten_chr set_names
 #' @importFrom clipr read_clip
 #' @importFrom curl curl_unescape
+#' @importFrom jsonlite toJSON
 #' @importFrom stringi stri_split_regex stri_split_fixed stri_detect_regex
 NULL
 

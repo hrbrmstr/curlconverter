@@ -2,7 +2,7 @@
 process_curl <- function(x) {
   req <- .pkgenv$ct$call("curlconverter.toR", x)
   req$url_parts <- unclass(parse_url(req$url))
-  class(req$url_parts) <- c("url", class(url))
+  class(req$url_parts) <- c("url", class(req$url_parts))
   req[["orig_curl"]] <- x
   class(req) <- c("cc_obj", class(req))
   req

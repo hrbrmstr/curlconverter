@@ -1,3 +1,7 @@
+# print.url <- function (x, ...)  {
+#   jsonlite::toJSON(x, pretty=TRUE)
+# }
+
 .pkgenv <- new.env(parent=emptyenv())
 
 .onAttach <- function(...) {

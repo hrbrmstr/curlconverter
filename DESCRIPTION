@@ -21,9 +21,13 @@ Imports:
     clipr,
     stringi,
     formatR,
-    magrittr
+    magrittr,
+    jsonlite
 License: AGPL + file LICENSE
 LazyData: true
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
 RoxygenNote: 5.0.1
+VignetteBuilder: knitr
