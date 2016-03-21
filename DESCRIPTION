@@ -1,5 +1,5 @@
 Package: curlconverter
-Title: Tools to Transform 'cURL' Command-line Calls to 'httr' Requests
+Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
 Version: 0.7.0
 Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
              person("Nick", "Carneiro", role = c("ctb")))
