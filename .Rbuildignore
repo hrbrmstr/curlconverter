@@ -5,4 +5,5 @@
 ^\.travis\.yml$
 ^CONDUCT\.md$
 ^inst/js/node_modules/
+^inst/js/\.V8history
 ^cran-comments\.md$
