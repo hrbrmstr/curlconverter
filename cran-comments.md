@@ -25,3 +25,8 @@ around the bits that would retreive content from the internet
 since that's just to show folks how to use the result of 
 the functions and not part of the core functionaly
 (it's really only testing httr's ability to retreive data).
+
+Even though it's implied with the clipr in the Imports, I
+explicitly added the need for xclip (at al) in SystemRequirements
+(just copied & pasted the SystemRequirements field from the 
+clipr pacakge).
