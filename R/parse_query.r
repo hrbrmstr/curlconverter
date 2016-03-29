@@ -10,6 +10,8 @@
 #' @param query query string to decode
 #' @references \href{https://en.wikipedia.org/wiki/Query_string}{Query Strings}
 #' @export
+#' @examples
+#' parse_query("a=1&b=test")
 parse_query <- function(query) {
   params <- vapply(stri_split_regex(query, "&", omit_empty=TRUE)[[1]],
                    stri_split_fixed, "=", 2, simplify=TRUE,

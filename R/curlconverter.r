@@ -17,9 +17,12 @@
 #'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
 #' @export
 #' @examples
-#' \dontrun{
 #' library(httr)
+#'
 #' my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
+#'
+#' \dontrun{
+#' # external test which captures live data
 #' content(my_ip[[1]](), as="parsed")
 #' }
 straighten <- function(curls=read_clip(), quiet=FALSE) {

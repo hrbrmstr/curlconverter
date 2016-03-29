@@ -31,9 +31,12 @@ into working \code{httr} \code{\link[httr]{VERB}()} functions, optionally \code{
 to the console and/or replacing the system clipboard with the source code for the function.
 }
 \examples{
-\dontrun{
 library(httr)
+
 my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
+
+\dontrun{
+# external test which captures live data
 content(my_ip[[1]](), as="parsed")
 }
 }

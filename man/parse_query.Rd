@@ -18,6 +18,9 @@ the body of the request contains a URL encoded query string as well.
 This function will take any query string and return a named list of
 the paremters. Both the names and values will be URL decoded.
 }
+\examples{
+parse_query("a=1&b=test")
+}
 \references{
 \href{https://en.wikipedia.org/wiki/Query_string}{Query Strings}
 }

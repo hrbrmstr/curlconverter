@@ -19,3 +19,9 @@ I know folks double-check the automated output, but
 the spelling - cURL - is what the cURL project folks
 use and I'd like to keep it what way in the package
 DESCRIPTION. 
+
+I updated the examples and only added \dontrun{} blocks
+around the bits that would retreive content from the internet
+since that's just to show folks how to use the result of 
+the functions and not part of the core functionaly
+(it's really only testing httr's ability to retreive data).
