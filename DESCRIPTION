@@ -11,6 +11,9 @@ Description: Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which i
     system clipboard or by passing in a vector of 'cURL' command-lines and getting back a
     list of parameter elements which can be used to form 'httr' requests. You can also make a
     complete/working/callable 'httr::VERB' function right from the tools provided.
+SystemRequirements: xclip <http://sourceforge.net/projects/xclip/> or xsel
+  <http://www.vergenet.net/~conrad/software/xsel/> for accessing the X11
+  clipboard
 Depends:
     R (>= 3.0.0)
 Imports:
