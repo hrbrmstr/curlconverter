@@ -323,7 +323,6 @@ var toR = function(curlCommand) {
 };
 
 module.exports = toR;
-
 },{"../util":7}],6:[function(require,module,exports){
 'use strict';
 
@@ -359,6 +358,13 @@ var parseCurlCommand = function(curlCommand) {
     var cookies;
     var url = parsedArguments._[1];
     var headers = null;
+    var username = null;
+    var password = null;
+    var verbose = null;
+
+    if (parsedArguments.v) { verbose = true; }
+    if (parsedArguments.verbose) { verbose = true; }
+
     if (parsedArguments.H) {
       if (headers === null) { headers = {} ; }
         if (typeof(parsedArguments.H) === 'string') {
@@ -392,12 +398,30 @@ var parseCurlCommand = function(curlCommand) {
             }
         });
     }
+
+    if (parsedArguments.u) {
+      if (username === null) { username = "" ; }
+      if (password === null) { password = "" ; }
+      var colonIndex = parsedArguments.u.indexOf(':');
+      username = parsedArguments.u.substring(0, colonIndex);
+      password = parsedArguments.u.substring(colonIndex + 1).trim();
+    }
+
+    if (parsedArguments.user) {
+      if (username === null) { username = "" ; }
+      if (password === null) { password = "" ; }
+      var colonIndex = parsedArguments.user.indexOf(':');
+      username = parsedArguments.user.substring(0, colonIndex);
+      password = parsedArguments.user.substring(colonIndex + 1).trim();
+    }
+
     if (cookieString) {
         var cookieParseOptions = {
             decode: function(s) {return s;}
         };
         cookies = cookie.parse(cookieString.replace('Cookie: ', ''), cookieParseOptions);
     }
+
     var method;
     if (parsedArguments.X === 'POST') {
         method = 'post';
@@ -406,26 +430,30 @@ var parseCurlCommand = function(curlCommand) {
     } else {
         method = 'get';
     }
+
     var request = {
-        url: url,
-        method: method
+      url: url,
+      method: method
     };
-    if (headers) {
-        request.headers = headers;
-    }
-    if (cookies) {
-        request.cookies = cookies;
-    }
+
+    if (headers) { request.headers = headers; }
+    if (cookies) { request.cookies = cookies; }
+    if (username) { request.username = username; }
+    if (password) { request.password = password; }
+    if (verbose) { request.verbose = verbose; }
+
     if (parsedArguments.data) {
         request.data = parsedArguments.data;
     } else if (parsedArguments['data-binary']) {
         request.data = parsedArguments['data-binary'];
     }
+
     return request;
+
 };
 
 module.exports = {
-    parseCurlCommand: parseCurlCommand
+  parseCurlCommand: parseCurlCommand
 };
 
 },{"cookie":2,"minimist":8,"string-argv":9}],8:[function(require,module,exports){

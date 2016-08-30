@@ -1,3 +1,6 @@
+## 0.8.0
+* support for `-v / --verbose` and `-u / --user` `curl` command-line parameters.
+
 ## 0.7.0
 * calls to `add_headers` & `set_cookies` now have an `httr::` prefix so it's not
   necessary to load `httr`

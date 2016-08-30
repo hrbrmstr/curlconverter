@@ -18,6 +18,7 @@ The following functions are implemented:
 
 ### News
 
+-   Version 0.8.0 : See `NEWS` file.
 -   Version 0.7.0 : See `NEWS` file.
 -   Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes \#4 (added this to the test suite)
 -   Version 0.6.6 : Code cleanup & documentation update
@@ -46,7 +47,7 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.7.0'
+# [1] '0.8.0'
 ```
 
 Simple example using a call to <https://httpbin.org/headers>:
@@ -54,8 +55,9 @@ Simple example using a call to <https://httpbin.org/headers>:
 ``` r
 httpbinrhcurl <- "curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed"
 
-res <- make_req(straighten(httpbinrhcurl))
+straight <- straighten(httpbinrhcurl)
 # curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed
+res <- make_req(straight)
 
 # or 
 
@@ -70,7 +72,6 @@ toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
 #     "Accept-Encoding": ["gzip, deflate, sdch"],
 #     "Accept-Language": ["en-US,en;q=0.8"],
 #     "Cache-Control": ["no-cache"],
-#     "Content-Length": ["0"],
 #     "Host": ["httpbin.org"],
 #     "Pragma": ["no-cache"],
 #     "Referer": ["https://httpbin.org/"],
@@ -219,35 +220,30 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["27"],
-#       "fk_sensortype": ["4"],
-#       "date": ["1459033200000"]
+#       "measure": ["24"],
+#       "fk_sensortype": ["1"],
+#       "date": ["1472421600000"]
 #     },
 #     {
-#       "measure": ["31"],
-#       "fk_sensortype": ["1"],
-#       "date": ["1459116000000"]
+#       "measure": ["20"],
+#       "fk_sensortype": ["4"],
+#       "date": ["1472421600000"]
 #     },
 #     {
 #       "measure": ["14"],
-#       "fk_sensortype": ["4"],
-#       "date": ["1459116000000"]
-#     },
-#     {
-#       "measure": ["10"],
 #       "fk_sensortype": ["6"],
-#       "date": ["1459116000000"]
+#       "date": ["1472421600000"]
 #     },
 #     {
-#       "measure": ["0.3"],
+#       "measure": ["0.2"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1459116000000"]
+#       "date": ["1472421600000"]
 #     }
 #   ]
 # }
 ```
 
-That also sends this to the console:
+That also sends this to the console and clipboard:
 
 ``` r
 VERB(verb = "POST", 
@@ -272,11 +268,13 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Tue Mar 29 15:07:18 2016"
+# [1] "Tue Aug 30 10:03:37 2016"
 
 test_dir("tests/")
-# testthat results ========================================================================================================
+# ..........testthat results ========================================================================================================
 # OK: 1 SKIPPED: 0 FAILED: 0
+# 
+# DONE ===================================================================================================================
 ```
 
 ### Code of Conduct

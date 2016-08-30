@@ -30,6 +30,7 @@ The following functions are implemented:
 - `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
 
 ### News
+- Version 0.8.0 : See `NEWS` file.
 - Version 0.7.0 : See `NEWS` file.
 - Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes #4 (added this to the test suite)
 - Version 0.6.6 : Code cleanup & documentation update
@@ -69,7 +70,8 @@ Simple example using a call to <https://httpbin.org/headers>:
 ```{r}
 httpbinrhcurl <- "curl 'https://httpbin.org/headers' -H 'pragma: no-cache' -H 'accept-encoding: gzip, deflate, sdch' -H 'accept-language: en-US,en;q=0.8' -H 'upgrade-insecure-requests: 1' -H 'user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.39 Safari/537.36' -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8' -H 'cache-control: no-cache' -H 'referer: https://httpbin.org/' --compressed"
 
-res <- make_req(straighten(httpbinrhcurl))
+straight <- straighten(httpbinrhcurl)
+res <- make_req(straight)
 
 # or 
 
@@ -114,7 +116,7 @@ straighten(curl_line) %>%
 toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 ```
 
-That also sends this to the console:
+That also sends this to the console and clipboard:
 
 ```{r eval=FALSE}
 VERB(verb = "POST", 

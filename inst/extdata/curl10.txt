@@ -1,0 +1,1 @@
+curl -v -u abcdefghij1234567890:X -H "Content-Type: application/json" -X GET "https://httpbin.org/basic-auth/user/passwd"'
