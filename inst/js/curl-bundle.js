@@ -361,6 +361,8 @@ var parseCurlCommand = function(curlCommand) {
     var username = null;
     var password = null;
     var verbose = null;
+    var user_agent = null;
+    var referer = null;
 
     if (parsedArguments.v) { verbose = true; }
     if (parsedArguments.verbose) { verbose = true; }
@@ -415,6 +417,12 @@ var parseCurlCommand = function(curlCommand) {
       password = parsedArguments.user.substring(colonIndex + 1).trim();
     }
 
+    if (parsedArguments.A) { user_agent = parsedArguments.A; }
+    if (parsedArguments["user-agent"]) { user_agent = parsedArguments["user-agent"]; }
+
+    if (parsedArguments.e) { referer = parsedArguments.e; }
+    if (parsedArguments.referer) { referer = parsedArguments.referer; }
+
     if (cookieString) {
         var cookieParseOptions = {
             decode: function(s) {return s;}
@@ -441,6 +449,8 @@ var parseCurlCommand = function(curlCommand) {
     if (username) { request.username = username; }
     if (password) { request.password = password; }
     if (verbose) { request.verbose = verbose; }
+    if (user_agent) { request.user_agent = user_agent; }
+    if (referer) { request.verbose = referer; }
 
     if (parsedArguments.data) {
         request.data = parsedArguments.data;
