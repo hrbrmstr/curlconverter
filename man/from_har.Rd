@@ -2,9 +2,9 @@
 % Please edit documentation in R/from_har.r
 \name{from_har}
 \alias{from_har}
-\title{Convert HAR to CURL}
+\title{Convert HAR to cURL}
 \usage{
-from_har(har, filter = c("All", "Doc", "JS", "CSS", , "XHR", "Img", "XHR",
+from_har(har, filter = c("All", "Doc", "JS", "CSS", "XHR", "Img", "XHR",
   "Media", "Font", "WS", "Manifest", "Other"))
 }
 \arguments{
@@ -14,10 +14,10 @@ from_har(har, filter = c("All", "Doc", "JS", "CSS", , "XHR", "Img", "XHR",
 response}
 }
 \value{
-A character vector of CURL calls
+A character vector of cURL calls
 }
 \description{
-Convert HAR to CURL
+Convert HAR to cURL
 }
 \examples{
 \dontrun{

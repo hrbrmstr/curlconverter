@@ -2,7 +2,7 @@
 % Please edit documentation in R/from_har.r
 \name{from_request}
 \alias{from_request}
-\title{Convert HAR request to CURL}
+\title{Convert HAR request to cURL}
 \usage{
 from_request(request)
 }
@@ -10,10 +10,10 @@ from_request(request)
 \item{request}{a parsed HAR entry  request as a list}
 }
 \value{
-a CURL string
+a cURL string
 }
 \description{
-Convert HAR request to CURL
+Convert HAR request to cURL
 }
 \examples{
 \dontrun{

@@ -1,10 +1,10 @@
-#' Convert HAR to CURL
+#' Convert HAR to cURL
 #'
 #' @param har a JSON string, URL or file
 #' @param filter a filter working on content-type given by the HAR entry
 #'    response
 #'
-#' @return A character vector of CURL calls
+#' @return A character vector of cURL calls
 #' @export
 #'
 #' @examples
@@ -14,7 +14,7 @@
 #'    harfile %>% from_har
 #' }
 
-from_har <- function(har, filter = c("All", "Doc", "JS", "CSS", , "XHR",
+from_har <- function(har, filter = c("All", "Doc", "JS", "CSS", "XHR",
                                      "Img", "XHR", "Media", "Font", "WS",
                                      "Manifest", "Other")){
   if (!is.character(har) && !is(har, "connection")) {
@@ -40,11 +40,11 @@ from_har <- function(har, filter = c("All", "Doc", "JS", "CSS", , "XHR",
 }
 
 
-#' Convert HAR request to CURL
+#' Convert HAR request to cURL
 #'
 #' @param request a parsed HAR entry  request as a list
 #'
-#' @return a CURL string
+#' @return a cURL string
 #' @export
 #'
 #' @examples
