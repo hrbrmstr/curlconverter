@@ -94,3 +94,8 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   return(f)
 
 }
+
+# filter the entries in a HAR based on response content-type
+filter_entries <- function(entries, filter){
+  entries
+}
