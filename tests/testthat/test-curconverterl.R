@@ -6,7 +6,7 @@ test_that("straighten works", {
                       sapply(
                         sapply(list.files(system.file("extdata",
                                                       package="curlconverter"),
-                                          full.names=TRUE),
+                                          full.names=TRUE, pattern = "curl"),
                                readLines, warn=FALSE),
                         straighten), length)),
               is_true())
@@ -17,7 +17,7 @@ test_that("make_req works", {
 
   lapply(sapply(list.files(system.file("extdata",
                                        package="curlconverter"),
-                        full.names=TRUE),
+                        full.names=TRUE, pattern = "curl"),
                 readLines, warn=FALSE), straighten) -> combed
 
   for (i in seq_along(combed)) {
