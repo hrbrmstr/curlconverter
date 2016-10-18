@@ -17,7 +17,12 @@ Convert HAR request to cURL
 }
 \examples{
 \dontrun{
-
+   hardir <- system.file("extdata", package = "curlconverter")
+   harfile <- file.path(hardir, "har1.har")
+   entry <-
+     fromJSON(harfile, simplifyVector = FALSE)[["log"]][["entries"]][[1]]
+   req <- entry[["request"]]
+   req \%>\% from_request
 }
 }
 

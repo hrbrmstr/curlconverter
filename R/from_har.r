@@ -49,7 +49,12 @@ from_har <- function(har, filter = c("All", "Doc", "JS", "CSS", "XHR",
 #'
 #' @examples
 #' \dontrun{
-#'
+#'    hardir <- system.file("extdata", package = "curlconverter")
+#'    harfile <- file.path(hardir, "har1.har")
+#'    entry <-
+#'      fromJSON(harfile, simplifyVector = FALSE)[["log"]][["entries"]][[1]]
+#'    req <- entry[["request"]]
+#'    req %>% from_request
 #' }
 
 from_request <- function(request){
