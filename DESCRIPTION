@@ -21,11 +21,11 @@ Imports:
     curl,
     httr,
     purrr,
-    clipr,
     stringi,
     formatR,
     magrittr,
     jsonlite
+Remotes: mdlincoln/clipr
 License: AGPL
 LazyData: true
 Suggests:
