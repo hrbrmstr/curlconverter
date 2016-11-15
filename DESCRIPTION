@@ -21,6 +21,7 @@ Imports:
     curl,
     httr,
     purrr,
+    clipr,
     stringi,
     formatR,
     magrittr,
