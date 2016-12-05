@@ -1,24 +1,28 @@
+# Sample .travis.yml for R projects
+
 language: r
-warnings_are_errors: true
-sudo: required
-
 r:
- - oldrel
- - release
- - devel
-
-apt_packages:
-  - libv8-dev
-  - xclip
-
+  - oldrel
+  - release
+  - devel
+# Create a build matrix that will test package with an empty DISPLAY value
+# (making the clipboard unavailable) and a correctly-configured DISPLAY (making
+# the clipboard available)
 env:
- global:
-   - CRAN: http://cran.rstudio.com
+  - DISPLAY=""
+  - DISPLAY=:99.0
+warnings_are_errors: true
+cache: packages
+sudo: false
+r_check_revdep: false
 
-notifications:
-  email:
-    - bob@rud.is
-  irc:
-    channels:
-      - "104.236.112.222#builds"
-    nick: travisci
+# Install xclip
+addons:
+  apt:
+    packages:
+      - xclip
+
+# Ensure xclip can still run headlessly
+before_script:
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3

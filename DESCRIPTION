@@ -26,6 +26,7 @@ Imports:
     formatR,
     magrittr,
     jsonlite
+Remotes: mdlincoln/clipr
 License: AGPL
 LazyData: true
 Suggests:
