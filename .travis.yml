@@ -2,10 +2,6 @@
 
 language: r
 
-r:
-  - oldrel
-  - release
-
 matrix:
   include:
     - os: linux
