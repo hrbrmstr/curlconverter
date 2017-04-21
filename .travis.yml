@@ -6,12 +6,6 @@ matrix:
   include:
     - os: linux
       dist: trusty
-    - os: osx
-      osx_image: xcode8.1
-      before_install:
-        - brew tap homebrew/versions
-        - brew install v8-315
-      latex: false
 
 # Create a build matrix that will test package with an empty DISPLAY value
 # (making the clipboard unavailable) and a correctly-configured DISPLAY (making
