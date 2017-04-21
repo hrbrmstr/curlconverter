@@ -1,7 +1,7 @@
 Package: curlconverter
 Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
-Version: 0.8.0
-Authors@R: c(person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
+Version: 0.8.1
+Authors@R: c(person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
              person("Nick", "Carneiro", role = c("ctb")))
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason
@@ -26,12 +26,11 @@ Imports:
     formatR,
     magrittr,
     jsonlite
-Remotes: mdlincoln/clipr
 License: AGPL
 LazyData: true
 Suggests:
     testthat,
     knitr,
     rmarkdown
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr

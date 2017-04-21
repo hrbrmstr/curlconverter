@@ -20,4 +20,3 @@ be passed to another function to automagically make 'httr' functions.
 \author{
 Bob Rudis (@hrbrmstr)
 }
-

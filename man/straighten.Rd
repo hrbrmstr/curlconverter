@@ -41,4 +41,3 @@ content(my_ip[[1]](), as="parsed")
 \seealso{
 \code{\link{make_req}()}, \code{httr} \code{\link[httr]{VERB}()}
 }
-

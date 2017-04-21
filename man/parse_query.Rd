@@ -24,4 +24,3 @@ parse_query("a=1&b=test")
 \references{
 \href{https://en.wikipedia.org/wiki/Query_string}{Query Strings}
 }
-
