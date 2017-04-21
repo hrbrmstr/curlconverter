@@ -4,8 +4,8 @@ output: rmarkdown::github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/curlconverter)](http://cran.r-project.org/package=curlconverter)
-[![](http://cranlogs.r-pkg.org/badges/curlconverter)](http://cran.rstudio.com/web/packages/curlconverter/index.html)
+[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
+[![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
