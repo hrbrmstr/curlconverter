@@ -1,6 +1,6 @@
 Package: curlconverter
 Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
-Version: 0.8.1
+Version: 0.8.2
 Authors@R: c(person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
              person("Nick", "Carneiro", role = c("ctb")))
 Maintainer: Bob Rudis <bob@rud.is>
@@ -15,11 +15,11 @@ SystemRequirements: xclip <http://sourceforge.net/projects/xclip/> or xsel
   <http://www.vergenet.net/~conrad/software/xsel/> for accessing the X11
   clipboard
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.0.0),
+    httr
 Imports:
     V8,
     curl,
-    httr,
     purrr,
     clipr,
     stringi,
