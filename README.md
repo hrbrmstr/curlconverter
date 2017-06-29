@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/curlconverter)](http://cran.r-project.org/package=curlconverter) [![](http://cranlogs.r-pkg.org/badges/curlconverter)](http://cran.rstudio.com/web/packages/curlconverter/index.html)
+[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter) [![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 
 `curlconverter` - Generate `httr` functions or parameters for use with `httr` from `cURL` commands.
 
@@ -15,6 +15,7 @@ The following functions are implemented:
 -   `straighten`: convert one or more *"Copy as cURL"* command lines into useful data
 -   `parse_query`: parse URL query parameters into a named list
 -   `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
+-   `curl_convert`: if you only have 1 command-line to convert this is a handy shortcut
 
 ### Installation
 
@@ -52,7 +53,7 @@ straighten(httpbinrhcurl) %>%
 toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
 # {
 #   "headers": {
-#     "Accept": ["application/json, text/xml, application/xml, */*,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"],
+#     "Accept": ["text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"],
 #     "Accept-Encoding": ["gzip, deflate, sdch"],
 #     "Accept-Language": ["en-US,en;q=0.8"],
 #     "Cache-Control": ["no-cache"],
@@ -205,24 +206,14 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["72"],
+#       "measure": ["61"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1492639200000"]
+#       "date": ["1498600800000"]
 #     },
 #     {
-#       "measure": ["12"],
-#       "fk_sensortype": ["4"],
-#       "date": ["1492639200000"]
-#     },
-#     {
-#       "measure": ["8"],
-#       "fk_sensortype": ["6"],
-#       "date": ["1492639200000"]
-#     },
-#     {
-#       "measure": ["0.4"],
+#       "measure": ["0.2"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1492639200000"]
+#       "date": ["1498600800000"]
 #     }
 #   ]
 # }
@@ -253,7 +244,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Fri Apr 21 12:31:09 2017"
+# [1] "Thu Jun 29 09:23:57 2017"
 
 test_dir("tests/")
 # ..........testthat results ========================================================================================================

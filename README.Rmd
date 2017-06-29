@@ -28,6 +28,7 @@ The following functions are implemented:
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
 - `parse_query`: parse URL query parameters into a named list
 - `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
+- `curl_convert`: if you only have 1 command-line to convert this is a handy shortcut
 
 ### Installation
 

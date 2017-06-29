@@ -36,3 +36,16 @@ make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
                     quiet=quiet,
                     add_clip=add_clip)
 }
+
+#' Shortcut to convert a single cURL command-line into a single R function
+#'
+#' @param x a vector of \code{curlcoverter} objects
+#' @return an R function and a version of the function on the clipboard
+#' @export
+curl_convert <- function(x) {
+
+  tmp <- straighten(x)
+  tmp <- make_req(tmp)
+  tmp[[1]]
+
+}
