@@ -3,6 +3,7 @@
 export("%>%")
 export(from_har)
 export(from_request)
+export(curl_convert)
 export(make_req)
 export(parse_query)
 export(straighten)

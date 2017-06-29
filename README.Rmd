@@ -4,8 +4,8 @@ output: rmarkdown::github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/curlconverter)](http://cran.r-project.org/package=curlconverter)
-[![](http://cranlogs.r-pkg.org/badges/curlconverter)](http://cran.rstudio.com/web/packages/curlconverter/index.html)
+[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
+[![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -28,21 +28,7 @@ The following functions are implemented:
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
 - `parse_query`: parse URL query parameters into a named list
 - `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
-
-### News
-- Version 0.8.0 : See `NEWS` file.
-- Version 0.7.0 : See `NEWS` file.
-- Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes #4 (added this to the test suite)
-- Version 0.6.6 : Code cleanup & documentation update
-- Version 0.6.5 : Reads & sets cookies
-- Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
-- Version 0.6.0 : changed the idiom (examples below)
-- Version 0.5.0 : `make_req` now actually _returns a working/callable R function_
-- Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
-- Version 0.3.1 : handles `--header` now (fixes #1)
-- Version 0.3.0 : Added `parse_query`
-- Version 0.2.0 : Added parsed URL to return value of `straighten()`
-- Version 0.1.0 released
+- `curl_convert`: if you only have 1 command-line to convert this is a handy shortcut
 
 ### Installation
 

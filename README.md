@@ -1,6 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/curlconverter)](http://cran.r-project.org/package=curlconverter) [![](http://cranlogs.r-pkg.org/badges/curlconverter)](http://cran.rstudio.com/web/packages/curlconverter/index.html)
+[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter) [![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 
 `curlconverter` - Generate `httr` functions or parameters for use with `httr` from `cURL` commands.
 
@@ -15,22 +15,7 @@ The following functions are implemented:
 -   `straighten`: convert one or more *"Copy as cURL"* command lines into useful data
 -   `parse_query`: parse URL query parameters into a named list
 -   `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
-
-### News
-
--   Version 0.8.0 : See `NEWS` file.
--   Version 0.7.0 : See `NEWS` file.
--   Version 0.6.7 : Fixed bug in js module that caused the header parsing to fail if there was only one header. Fixes \#4 (added this to the test suite)
--   Version 0.6.6 : Code cleanup & documentation update
--   Version 0.6.5 : Reads & sets cookies
--   Version 0.6.1 : Improved README <https://github.com/hrbrmstr/curlconverter/issues/3>
--   Version 0.6.0 : changed the idiom (examples below)
--   Version 0.5.0 : `make_req` now actually *returns a working/callable R function*
--   Version 0.4.0 : `make_req` turns the cURLs into `httr` requests
--   Version 0.3.1 : handles `--header` now (fixes \#1)
--   Version 0.3.0 : Added `parse_query`
--   Version 0.2.0 : Added parsed URL to return value of `straighten()`
--   Version 0.1.0 released
+-   `curl_convert`: if you only have 1 command-line to convert this is a handy shortcut
 
 ### Installation
 
@@ -47,7 +32,7 @@ library(httr)
 
 # current verison
 packageVersion("curlconverter")
-# [1] '0.8.0'
+# [1] '0.8.1'
 ```
 
 Simple example using a call to <https://httpbin.org/headers>:
@@ -68,10 +53,11 @@ straighten(httpbinrhcurl) %>%
 toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
 # {
 #   "headers": {
-#     "Accept": ["application/json, text/xml, application/xml, */*,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"],
+#     "Accept": ["text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"],
 #     "Accept-Encoding": ["gzip, deflate, sdch"],
 #     "Accept-Language": ["en-US,en;q=0.8"],
 #     "Cache-Control": ["no-cache"],
+#     "Connection": ["close"],
 #     "Host": ["httpbin.org"],
 #     "Pragma": ["no-cache"],
 #     "Referer": ["https://httpbin.org/"],
@@ -220,24 +206,14 @@ toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
 #   ],
 #   "measures": [
 #     {
-#       "measure": ["24"],
+#       "measure": ["61"],
 #       "fk_sensortype": ["1"],
-#       "date": ["1472421600000"]
-#     },
-#     {
-#       "measure": ["20"],
-#       "fk_sensortype": ["4"],
-#       "date": ["1472421600000"]
-#     },
-#     {
-#       "measure": ["14"],
-#       "fk_sensortype": ["6"],
-#       "date": ["1472421600000"]
+#       "date": ["1498600800000"]
 #     },
 #     {
 #       "measure": ["0.2"],
 #       "fk_sensortype": ["8"],
-#       "date": ["1472421600000"]
+#       "date": ["1498600800000"]
 #     }
 #   ]
 # }
@@ -268,7 +244,7 @@ library(curlconverter)
 library(testthat)
 
 date()
-# [1] "Tue Aug 30 10:03:37 2016"
+# [1] "Thu Jun 29 09:23:57 2017"
 
 test_dir("tests/")
 # ..........testthat results ========================================================================================================

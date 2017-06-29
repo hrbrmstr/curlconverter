@@ -1,5 +1,6 @@
 context("cURL processing")
 test_that("straighten works", {
+
   curl_vec <-
     sapply(
       sapply(
@@ -25,10 +26,21 @@ test_that("straighten works", {
   }, logical(1))
   expect_that(all(chk), is_true())
 
+  skip_if_not(clipr::clipr_available())
+  expect_that(all(c(6L, 8L, 6L, 6L, 4L, 5L, 6L, 5L, 6L, 6L) ==
+                    sapply(
+                      sapply(
+                        sapply(list.files(system.file("extdata",
+                                                      package="curlconverter"),
+                                          full.names=TRUE),
+                               readLines, warn=FALSE),
+                        straighten), length)),
+              is_true())
+
 })
 
 test_that("make_req works", {
-
+  skip_if_not(clipr::clipr_available())
   lapply(sapply(list.files(system.file("extdata",
                                        package="curlconverter"),
                            full.names=TRUE, pattern = "curl"),

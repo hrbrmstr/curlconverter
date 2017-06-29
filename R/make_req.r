@@ -20,11 +20,11 @@
 #' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
 #'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
 #' @examples
+#' \dontrun{
 #' library(httr)
 #'
 #' my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
 #'
-#' \dontrun{
 #' # external test which captures live data
 #' content(my_ip[[1]](), as="parsed")
 #' }
@@ -35,4 +35,17 @@ make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
                     use_parts=use_parts,
                     quiet=quiet,
                     add_clip=add_clip)
+}
+
+#' Shortcut to convert a single cURL command-line into a single R function
+#'
+#' @param x a vector of \code{curlcoverter} objects
+#' @return an R function and a version of the function on the clipboard
+#' @export
+curl_convert <- function(x) {
+
+  tmp <- straighten(x)
+  tmp <- make_req(tmp)
+  tmp[[1]]
+
 }

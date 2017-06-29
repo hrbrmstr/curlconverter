@@ -25,11 +25,11 @@ components that can be used to build \code{httr} requests or passed to
 \code{\link[httr]{VERB}()} function.
 }
 \examples{
+\dontrun{
 library(httr)
 
 my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
 
-\dontrun{
 # external test which captures live data
 content(my_ip[[1]](), as="parsed")
 }
@@ -41,4 +41,3 @@ content(my_ip[[1]](), as="parsed")
 \seealso{
 \code{\link{make_req}()}, \code{httr} \code{\link[httr]{VERB}()}
 }
-
