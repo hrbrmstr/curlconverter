@@ -25,7 +25,8 @@ Imports:
     stringi,
     formatR,
     magrittr,
-    jsonlite
+    jsonlite,
+    methods
 License: AGPL
 LazyData: true
 Suggests:
