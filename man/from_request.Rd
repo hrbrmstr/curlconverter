@@ -25,4 +25,3 @@ Convert HAR request to cURL
    req \%>\% from_request
 }
 }
-

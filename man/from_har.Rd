@@ -26,4 +26,3 @@ Convert HAR to cURL
    harfile \%>\% from_har
 }
 }
-

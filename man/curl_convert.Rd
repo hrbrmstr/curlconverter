@@ -4,14 +4,14 @@
 \alias{curl_convert}
 \title{Shortcut to convert a single cURL command-line into a single R function}
 \usage{
-curl_convert(x)
-}
-\arguments{
-\item{x}{a vector of \code{curlcoverter} objects}
+curl_convert()
 }
 \value{
 an R function and a version of the function on the clipboard
 }
 \description{
 Shortcut to convert a single cURL command-line into a single R function
+}
+\note{
+The cURL command-line should be on the clipboard.
 }
