@@ -3,7 +3,7 @@ output: rmarkdown::github_document
 ---
 
 [![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/<USERNAME>/<REPO>?branch=master&svg=true)](https://ci.appveyor.com/project/<USERNAME>/<REPO>)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstrcurlconverter?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/curlconverter)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
 [![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 [![Coverage Status](https://img.shields.io/codecov/c/github/<USERNAME>/<REPO>/master.svg)](https://codecov.io/github/<USERNAME>/<REPO>?branch=master)

@@ -2,7 +2,7 @@
 [![Build
 Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter)
 [![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/%3CUSERNAME%3E/%3CREPO%3E?branch=master&svg=true)](https://ci.appveyor.com/project/%3CUSERNAME%3E/%3CREPO%3E)
+Status](https://ci.appveyor.com/api/projects/status/github/hrbrmstrcurlconverter?branch=master&svg=true)](https://ci.appveyor.com/project/hrbrmstr/curlconverter)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
 [![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
 [![Coverage
@@ -287,7 +287,7 @@ cat(capture.output(get_data[[1]]), sep="\n")
     ##         `X-Requested-With` = "XMLHttpRequest", Connection = "keep-alive"), 
     ##     body = list(deviceid = "65", function_name = "extract_measurements"), 
     ##     encode = "form")
-    ## <environment: 0x7fd1d2e07c68>
+    ## <environment: 0x7f90522f8a98>
 
 That also sends this to the console and clipboard:
 
