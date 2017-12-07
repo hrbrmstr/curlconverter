@@ -24,10 +24,12 @@ r_check_revdep: false
 addons:
   apt:
     packages:
-      - libv8-dev
       - xclip
 
 # Ensure xclip can still run headlessly
 before_script:
   - sh -e /etc/init.d/xvfb start
   - sleep 3
+
+after_success:
+  - Rscript -e 'covr::codecov()'

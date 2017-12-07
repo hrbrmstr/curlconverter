@@ -2,47 +2,52 @@
 output: rmarkdown::github_document
 ---
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter) [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
+[![Build Status](https://travis-ci.org/hrbrmstr/curlconverter.svg?branch=master)](https://travis-ci.org/hrbrmstr/curlconverter)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/<USERNAME>/<REPO>?branch=master&svg=true)](https://ci.appveyor.com/project/<USERNAME>/<REPO>)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/curlconverter)](https://cran.r-project.org/package=curlconverter)
 [![](http://cranlogs.r-pkg.org/badges/curlconverter)](https://cran.r-project.org/package=curlconverter)
+[![Coverage Status](https://img.shields.io/codecov/c/github/<USERNAME>/<REPO>/master.svg)](https://codecov.io/github/<USERNAME>/<REPO>?branch=master)
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#",
-  fig.path = "README-"
-)
-```
-`curlconverter` - Generate `httr` functions or parameters for use with `httr` from `cURL` commands.
+# curlconverter
 
-Based on the [`curlconverter`](https://github.com/NickCarneiro/curlconverter) Node module by Nick Carneiro
+Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
 
-### Why `curlconverter`?
+## Description
 
-Deciphering web/`REST` API and XHR calls can be tricky, which is one reason why
-internet browsers provide _"Copy as cURL"_ functionality within their "Developer Tools" pane(s). These `cURL` command-lines can be difficult to wrangle into an `httr::GET` or `httr:POST` request, but you can now "straighten" these "cURLs"" either from data copied to the system clipboard or by passing in a vector of cURL command-lines and getting back a list of parameter elements which can be used to form `httr` requests. These lists can be passed to another function to automagically make `httr` functions.
+Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason why internet browsers provide "Copy as cURL" functionality within their "Developer Tools"pane(s). These 'cURL' command-lines can be difficult to wrangle into an 'httr' 'GET' or 'POST' request, but you can now "straighten" these 'cURLs' either from data copied to the system clipboard or by passing in a vector of 'cURL' command-lines and getting back a list of parameter elements which can be used to form 'httr' requests. These lists can be passed to another function to automagically make 'httr' functions.
+
+### WIP
+
+This is the path back to CRAN and to 1.0.0.
+
+The V8 dependency has been removed and the package now uses `docopt`. This will make it easier to install on many systems and enable rapid addition of support for new `cURL` command-line parameters.
+
+The "HAR" functions are not working well with the new methods but will be for full release.
+
+## What's Inside The Tin
 
 The following functions are implemented:
 
 - `straighten`: convert one or more _"Copy as cURL"_ command lines into useful data
 - `parse_query`: parse URL query parameters into a named list
 - `make_req`: turn parsed cURL command lines into a `httr` request functions (i.e. returns working R functions)
-- `curl_convert`: if you only have 1 command-line to convert this is a handy shortcut
 
-### Installation
+
+The following functions are implemented:
+
+## Installation
 
 ```{r eval=FALSE}
 devtools::install_github("hrbrmstr/curlconverter")
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
+```{r message=FALSE, warning=FALSE, error=FALSE, include=FALSE}
 options(width=120)
 ```
 
-### Usage
+## Usage
 
-```{r}
+```{r message=FALSE, warning=FALSE, error=FALSE}
 library(curlconverter)
 library(jsonlite)
 library(httr)
@@ -64,13 +69,13 @@ res <- make_req(straight)
 straighten(httpbinrhcurl) %>% 
   make_req() -> res
 
-toJSON(content(res[[1]](), as="parsed"), pretty=TRUE)
+toJSON(content(res[[1]](), as="parsed"), auto_unbox = TRUE, pretty=TRUE)
 ```
 
 Slightly more complex one:
 
 ```{r}
-toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed"), pretty=TRUE)
+toJSON(straighten("curl 'http://financials.morningstar.com/ajax/ReportProcess4HtmlAjax.html?&t=XNAS:MSFT&region=usa&culture=en-US&cur=&reportType=is&period=12&dataType=A&order=asc&columnYear=5&curYearPart=1st5year&rounding=3&view=raw&r=973302&callback=jsonp1454021128757&_=1454021129337' -H 'Cookie: JSESSIONID=5E43C98903E865D72AA3C2DCEF317848; sfhabit=asc%7Craw%7C3%7C12%7CA%7C5%7Cv0.14; ScrollY=0' -H 'DNT: 1' -H 'Accept-Encoding: gzip, deflate, sdch' -H 'Accept-Language: en-US,en;q=0.8' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.111 Safari/537.36' -H 'Accept: text/javascript, application/javascript, */*' -H 'Referer: http://financials.morningstar.com/income-statement/is.html?t=MSFT&region=usa&culture=en-US' -H 'X-Requested-With: XMLHttpRequest' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' --compressed"), auto_unbox = TRUE, pretty=TRUE)
 ```
 
 There are some built-in test files you can play with:
@@ -78,7 +83,7 @@ There are some built-in test files you can play with:
 ```{r}
 (curl_line <- readLines(system.file("extdata/curl5.txt", package="curlconverter"), warn=FALSE))
 
-toJSON(straighten(curl_line, quiet=TRUE), pretty=TRUE)
+toJSON(straighten(curl_line, quiet=TRUE), auto_unbox = TRUE, pretty=TRUE)
 (curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"), warn=FALSE))
 
 # example with query parameters in the body
@@ -88,7 +93,7 @@ req <- straighten(curl_line, quiet=FALSE)
 (req[[1]]$data)
 
 #yay!
-toJSON(parse_query(req[[1]]$data), pretty=TRUE)
+toJSON(parse_query(req[[1]]$data), auto_unbox = TRUE, pretty=TRUE)
 ```
 
 Spinning straw into gold
@@ -99,7 +104,7 @@ curl_line <- c('curl "http://anasim.iet.unipi.it/moniqa/php/from_js.php" -H "Ori
 straighten(curl_line) %>% 
   make_req() -> get_data
 
-toJSON(content(get_data[[1]](), as="parsed"), pretty=TRUE)
+cat(capture.output(get_data[[1]]), sep="\n")
 ```
 
 That also sends this to the console and clipboard:
@@ -118,17 +123,6 @@ VERB(verb = "POST",
      body = list(deviceid = "1", 
                  function_name = "extract_measurements"), 
      encode = "form")
-```
-
-### Test Results
-
-```{r}
-library(curlconverter)
-library(testthat)
-
-date()
-
-test_dir("tests/")
 ```
 
 ### Code of Conduct

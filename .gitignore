@@ -1,4 +1,8 @@
+.DS_Store
 .Rproj.user
 .Rhistory
 .RData
-inst/doc
+.Rproj
+src/*.o
+src/*.so
+src/*.dll

@@ -1,8 +1,13 @@
 Package: curlconverter
+Type: Package
 Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
-Version: 0.8.2
-Authors@R: c(person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre")),
-             person("Nick", "Carneiro", role = c("ctb")))
+Version: 1.0.0
+Date: 2017-12-07
+Authors@R: c(
+    person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
+           comment = c(ORCID = "0000-0001-5670-2640"))
+  )
+Author: Bob Rudis (bob@rud.is)
 Maintainer: Bob Rudis <bob@rud.is>
 Description: Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason
     why internet browsers provide "Copy as 'cURL'" functionality within their "Developer Tools"
@@ -13,25 +18,24 @@ Description: Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which i
     complete/working/callable 'httr::VERB' function right from the tools provided.
 SystemRequirements: xclip <http://sourceforge.net/projects/xclip/> or xsel
   <http://www.vergenet.net/~conrad/software/xsel/> for accessing the X11
-  clipboard
+  clipboardURL: https://github.com/hrbrmstr/curlconverter
+BugReports: https://github.com/hrbrmstr/curlconverter/issues
+License: AGPL
+LazyData: true
+Suggests:
+    testthat,
+    covr
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.2.0),
     httr
 Imports:
-    V8,
     curl,
-    purrr,
     clipr,
     stringi,
     formatR,
     magrittr,
     jsonlite,
-    methods
-License: AGPL
-LazyData: true
-Suggests:
-    testthat,
-    knitr,
-    rmarkdown
+    methods,
+    docopt,
+    stats
 RoxygenNote: 6.0.1
-VignetteBuilder: knitr

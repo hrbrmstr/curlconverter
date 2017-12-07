@@ -1,6 +1,4 @@
-#' Create `httr` requests from _"Copy as cURL"_ command-line calls
-#'
-#' Tools to Transform 'cURL' Command-line Calls to 'httr' Requests
+#' Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
 #'
 #' Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason why
 #' internet browsers provide "Copy as cURL" functionality within their "Developer Tools"
@@ -12,19 +10,17 @@
 #'
 #' @name curlconverter
 #' @docType package
-#' @author Bob Rudis (@@hrbrmstr)
-#' @import V8
-#' @import httr
+#' @author Bob Rudis (bob@@rud.is)
+#' @import httr docopt
 #' @importFrom formatR tidy_source
-#' @importFrom purrr map map_df flatten flatten_chr set_names
 #' @importFrom clipr read_clip
 #' @importFrom curl curl_unescape
 #' @importFrom jsonlite toJSON fromJSON
 #' @importFrom stringi stri_split_regex stri_split_fixed stri_detect_regex
 #' @importFrom utils capture.output
 #' @importFrom methods is
+#' @importFrom stats setNames
 NULL
-
 
 #' Pipe operator
 #'

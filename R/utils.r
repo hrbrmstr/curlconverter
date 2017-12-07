@@ -1,6 +1,6 @@
 # process a single cURL request (V8 call)
 process_curl <- function(x) {
-  req <- .pkgenv$ct$call("curlconverter.toR", x)
+  req <- to_r(x)
   req$url_parts <- unclass(parse_url(req$url))
   if (length(req$username) > 0) req$url_parts$username <- req$username
   if (length(req$password) > 0) req$url_parts$password <- req$password
@@ -58,7 +58,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
                     req$url_parts$username, req$url_parts$password)
   }
 
-  if (length(req$verbose) > 0) {
+  if (req$verbose) {
     verbos <- ", httr::verbose()"
   }
 
@@ -79,7 +79,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   formatR::tidy_source(text=out, width.cutoff=30, indent=4, file=fil)
   tmp <- paste0(readLines(fil), collapse="\n")
 
-  if (add_clip) clipr::write_clip(tmp)
+  if (add_clip) try(clipr::write_clip(tmp))
 
   if (!quiet) cat(tmp, "\n")
 
