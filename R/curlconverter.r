@@ -26,13 +26,8 @@
 #' content(my_ip[[1]](), as="parsed")
 #' }
 straighten <- function(curls=read_clip(), quiet=FALSE) {
-
   if (!quiet) message(curls)
-
-  obj <- lapply(curls, process_curl)
-
+  obj <- purrr::map(curls, process_curl)
   class(obj) <- c("cc_container", class(obj))
-
   obj
-
 }

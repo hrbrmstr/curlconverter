@@ -1,36 +1,37 @@
-to_r <- function(x) {
-
   "Usage: curl [<url>] [-H LINE ...] [-X COMMAND <url>] [-X COMMAND] [--request COMMAND] [--request COMMAND <url>] [options] [<url>]
 
---compressed
--H, --header LINE
--d, --data DATA             HTTP POST data (H)
---data-raw DATA             HTTP POST data, '@' allowed (H)
---data-ascii DATA           HTTP POST ASCII data (H)
---data-binary DATA          HTTP POST binary data (H)
---data-urlencode DATA       HTTP POST data url encoded (H)
--F, --form CONTENT          Specify HTTP multipart POST data (H)
---form-string STRING        Specify HTTP multipart POST data (H)
--A, --user-agent STRING     Send User-Agent STRING to server (H)
--e, --referer REFERER       Referer URL (H)
--m, --max-time SECONDS      Maximum time allowed for the transfer
--u, --user USER[:PASSWORD]  Server user and password
--X, --request COMMAND       Specify request command to use
--v, --verbose               Make the operation more talkative
---basic                     Use HTTP Basic Authentication (H)
--G, --get                   Send the -d data with a HTTP GET (H)
--I, --head                  Show document info only
--L, --location              Follow redirects (H)
---url URL                   URL to work with
---digest                    Use HTTP Digest Authentication (H)
--k, --insecure              Allow connections to SSL sites without certs (H)
--#, --progress-bar          Display transfer progress as a progress bar
--i, --include               Include protocol headers in the output (H/F)
-" -> curl_opts
+               --compressed
+          -H, --header LINE
+            -d, --data DATA HTTP POST data (H)
+            --data-raw DATA HTTP POST data, '@' allowed (H)
+          --data-ascii DATA HTTP POST ASCII data (H)
+         --data-binary DATA HTTP POST binary data (H)
+      --data-urlencode DATA HTTP POST data url encoded (H)
+         -F, --form CONTENT Specify HTTP multipart POST data (H)
+       --form-string STRING Specify HTTP multipart POST data (H)
+    -A, --user-agent STRING Send User-Agent STRING to server (H)
+      -e, --referer REFERER Referer URL (H)
+     -m, --max-time SECONDS Maximum time allowed for the transfer
+ -u, --user USER[:PASSWORD] Server user and password
+      -X, --request COMMAND Specify request command to use
+              -v, --verbose Make the operation more talkative
+                    --basic Use HTTP Basic Authentication (H)
+                  -G, --get Send the -d data with a HTTP GET (H)
+                 -I, --head Show document info only
+            -L, --location  Follow redirects (H)
+                  --url URL URL to work with
+                   --digest Use HTTP Digest Authentication (H)
+             -k, --insecure Allow connections to SSL sites without certs (H)
+         -#, --progress-bar Display transfer progress as a progress bar
+              -i, --include Include protocol headers in the output (H/F)
+" -> .curl_opts
 
+to_r <- function(x) {
+
+  # strip off leading `curl ` (if any)
   x <- gsub("^[[:space:]]*curl[[:space:]]+", "", x)
 
-  m <- docopt::docopt(curl_opts, x)
+  m <- docopt::docopt(.curl_opts, x)
 
   url <- m[["<url>"]]
 
@@ -79,6 +80,7 @@ to_r <- function(x) {
   if (length(m[["referer"]] > 0)) referer <- m[["referer"]]
 
   verbose <- m[["verbose"]]
+  verbose <- if (length(verbose) == 0) FALSE else verbose
 
   list(
     url = url[1],
@@ -90,9 +92,7 @@ to_r <- function(x) {
     referer = referer,
     data = curl_dat,
     headers = headers,
-    verbose = verbose#,
-    # orig_url = x,
-    # m = m
+    verbose = verbose
   )
 
 }

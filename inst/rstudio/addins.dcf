@@ -1,0 +1,4 @@
+Name: cURL Command-line Workbench
+Description: GUI for curlconverter
+Binding: curlAddin
+Interactive: true

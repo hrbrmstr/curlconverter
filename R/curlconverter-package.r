@@ -13,13 +13,15 @@
 #' @author Bob Rudis (bob@@rud.is)
 #' @import httr docopt
 #' @importFrom formatR tidy_source
-#' @importFrom clipr read_clip
+#' @importFrom clipr read_clip write_clip
 #' @importFrom curl curl_unescape
 #' @importFrom jsonlite toJSON fromJSON
 #' @importFrom stringi stri_split_regex stri_split_fixed stri_detect_regex
 #' @importFrom utils capture.output
 #' @importFrom methods is
 #' @importFrom stats setNames
+#' @import shiny miniUI stringi
+#' @import rstudioapi
 NULL
 
 #' Pipe operator
