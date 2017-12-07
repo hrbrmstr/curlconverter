@@ -39,6 +39,11 @@ my_ip <- straighten("curl 'https://httpbin.org/ip'") \%>\% make_req()
 # external test which captures live data
 content(my_ip[[1]](), as="parsed")
 }
+
+curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"),
+                       warn=FALSE)
+st <- straighten(curl_line, quiet=FALSE)
+req <- make_req(st)
 }
 \references{
 \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},

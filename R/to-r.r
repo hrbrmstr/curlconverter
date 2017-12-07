@@ -1,29 +1,29 @@
   "Usage: curl [<url>] [-H LINE ...] [-X COMMAND <url>] [-X COMMAND] [--request COMMAND] [--request COMMAND <url>] [options] [<url>]
 
                --compressed
+             -k, --insecure
+              -v, --verbose
+             -L, --location
+                    --basic
+                 -I, --head
+                   --digest
+              -i, --include
           -H, --header LINE
-            -d, --data DATA HTTP POST data (H)
-            --data-raw DATA HTTP POST data, '@' allowed (H)
-          --data-ascii DATA HTTP POST ASCII data (H)
-         --data-binary DATA HTTP POST binary data (H)
-      --data-urlencode DATA HTTP POST data url encoded (H)
-         -F, --form CONTENT Specify HTTP multipart POST data (H)
-       --form-string STRING Specify HTTP multipart POST data (H)
-    -A, --user-agent STRING Send User-Agent STRING to server (H)
-      -e, --referer REFERER Referer URL (H)
+            -d, --data DATA HTTP POST data
+            --data-raw DATA HTTP POST data, '@' allowed
+          --data-ascii DATA HTTP POST ASCII data
+         --data-binary DATA HTTP POST binary data
+      --data-urlencode DATA HTTP POST data url encoded
+         -F, --form CONTENT Specify HTTP multipart POST data
+       --form-string STRING Specify HTTP multipart POST data
+    -A, --user-agent STRING Send User-Agent STRING to server
+      -e, --referer REFERER Referer URL
      -m, --max-time SECONDS Maximum time allowed for the transfer
  -u, --user USER[:PASSWORD] Server user and password
       -X, --request COMMAND Specify request command to use
-              -v, --verbose Make the operation more talkative
-                    --basic Use HTTP Basic Authentication (H)
-                  -G, --get Send the -d data with a HTTP GET (H)
-                 -I, --head Show document info only
-            -L, --location  Follow redirects (H)
+                  -G, --get Send the -d data with a HTTP GET
                   --url URL URL to work with
-                   --digest Use HTTP Digest Authentication (H)
-             -k, --insecure Allow connections to SSL sites without certs (H)
          -#, --progress-bar Display transfer progress as a progress bar
-              -i, --include Include protocol headers in the output (H/F)
 " -> .curl_opts
 
 to_r <- function(x) {

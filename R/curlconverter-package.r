@@ -20,8 +20,8 @@
 #' @importFrom utils capture.output
 #' @importFrom methods is
 #' @importFrom stats setNames
-#' @import shiny miniUI stringi
-#' @import rstudioapi
+# @import shiny miniUI stringi
+# @import rstudioapi
 NULL
 
 #' Pipe operator

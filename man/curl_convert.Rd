@@ -4,7 +4,15 @@
 \alias{curl_convert}
 \title{Shortcut to convert a single cURL command-line into a single R function}
 \usage{
-curl_convert()
+curl_convert(curls = read_clip(), quiet = FALSE)
+}
+\arguments{
+\item{curls}{a character vector of one or more cURL command lines. It will
+read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
+browser developer tools).}
+
+\item{quiet}{if \code{FALSE}, a \code{message} with the original \code{cURL}
+command line will be output. (Default: \code{FALSE})}
 }
 \value{
 an R function and a version of the function on the clipboard

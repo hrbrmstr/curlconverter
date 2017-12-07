@@ -19,8 +19,8 @@
 #' @seealso \code{\link{straighten}()}, \code{httr} \code{\link[httr]{VERB}()}
 #' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
 #'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
-#' @examples
-#' \dontrun{
+#' @export
+#' @examples \dontrun{
 #' library(httr)
 #'
 #' my_ip <- straighten("curl 'https://httpbin.org/ip'") %>% make_req()
@@ -28,7 +28,11 @@
 #' # external test which captures live data
 #' content(my_ip[[1]](), as="parsed")
 #' }
-#' @export
+#'
+#' curl_line <- readLines(system.file("extdata/curl8.txt", package="curlconverter"),
+#'                        warn=FALSE)
+#' st <- straighten(curl_line, quiet=FALSE)
+#' req <- make_req(st)
 make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
   lapply(
     x,
@@ -42,11 +46,16 @@ make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
 #' Shortcut to convert a single cURL command-line into a single R function
 #'
 #' @note The cURL command-line should be on the clipboard.
+#' @param curls a character vector of one or more cURL command lines. It will
+#'        read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
+#'        browser developer tools).
+#' @param quiet if \code{FALSE}, a \code{message} with the original \code{cURL}
+#'        command line will be output. (Default: \code{FALSE})
 #' @return an R function and a version of the function on the clipboard
 #' @export
-curl_convert <- function() {
+curl_convert <- function(curls=read_clip(), quiet=FALSE) {
 
-  tmp <- straighten()
+  tmp <- straighten(curls, quiet)
   tmp <- make_req(tmp)
   tmp[[1]]
 
