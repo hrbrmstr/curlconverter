@@ -1,4 +1,8 @@
-Name: cURL Command-line Workbench
-Description: GUI for curlconverter
-Binding: curlAddin
+Name: convert cCURL
+Description: Convert a cURL on the clipboard to a straightened data structure and an executable httr request function. Also displays the function in the console and puts it back on the clipboard.
+Binding: convertAddin
 Interactive: true
+#Name: cURL Command-line Workbench
+#Description: GUI for curlconverter
+#Binding: curlAddin
+#Interactive: true

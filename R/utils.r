@@ -126,3 +126,15 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
 filter_entries <- function(entries, filter){
   entries
 }
+
+
+temp_name = function(n = 4, avoid = ls()) {
+
+  tn = paste(sample(letters, n), collapse="")
+
+  while (tn %in% avoid) {
+    tn = paste(sample(letters, n), collapse="")
+  }
+
+  tn
+}

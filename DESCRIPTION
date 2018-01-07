@@ -21,6 +21,7 @@ SystemRequirements: xclip <http://sourceforge.net/projects/xclip/> or xsel
   clipboardURL: https://github.com/hrbrmstr/curlconverter
 BugReports: https://github.com/hrbrmstr/curlconverter/issues
 License: AGPL
+Encoding: UTF-8
 LazyData: true
 Suggests:
     testthat,
@@ -38,4 +39,4 @@ Imports:
     methods,
     docopt,
     stats
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
