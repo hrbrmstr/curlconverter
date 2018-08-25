@@ -4,6 +4,7 @@ WIP
 
 * removed V8 dependency
 * now uses `docopt` package
+* Fixed #20
 
 ## 0.8.0
 * support for `-v / --verbose` and `-u / --user` `curl` command-line parameters.

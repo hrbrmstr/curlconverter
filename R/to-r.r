@@ -21,7 +21,7 @@
      -m, --max-time SECONDS Maximum time allowed for the transfer
  -u, --user USER[:PASSWORD] Server user and password
       -X, --request COMMAND Specify request command to use
-                  -G, --get Send the -d data with a HTTP GET
+                  -G, --get Send the 'minus d' data with a HTTP GET
                   --url URL URL to work with
          -#, --progress-bar Display transfer progress as a progress bar
 " -> .curl_opts
