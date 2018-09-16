@@ -7,6 +7,7 @@ WIP
 * Fixed #20
 * Added "query = list(...)" to the created function if the original URL
   had query parameters
+* Nicer formatting of make_req() functions via styler
 
 ## 0.8.0
 * support for `-v / --verbose` and `-u / --user` `curl` command-line parameters.

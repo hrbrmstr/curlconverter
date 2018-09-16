@@ -287,23 +287,28 @@ cat(capture.output(get_data[[1]]), sep="\n")
     ##         `X-Requested-With` = "XMLHttpRequest", Connection = "keep-alive"), 
     ##     body = list(deviceid = "65", function_name = "extract_measurements"), 
     ##     encode = "form")
-    ## <environment: 0x7fad57d07400>
+    ## <environment: 0x7ff274fb0030>
 
-That also sends this to the console and
-clipboard:
+That also sends this to the console and clipboard:
 
 ``` r
-httr::VERB(verb = "GET", url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
-    httr::add_headers(Origin = "http://anasim.iet.unipi.it", 
-        `Accept-Encoding` = "gzip, deflate", 
-        `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
-        `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
-        Accept = "*/*", Referer = "http://anasim.iet.unipi.it/moniqa/", 
-        `X-Requested-With` = "XMLHttpRequest", 
-        Connection = "keep-alive"), 
-    body = list(deviceid = "65", 
-        function_name = "extract_measurements"), 
-    encode = "form")
+httr::VERB(
+  verb = "GET", url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php",
+  httr::add_headers(
+    Origin = "http://anasim.iet.unipi.it",
+    `Accept-Encoding` = "gzip, deflate",
+    `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4",
+    `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36",
+    Accept = "*/*", Referer = "http://anasim.iet.unipi.it/moniqa/",
+    `X-Requested-With` = "XMLHttpRequest",
+    Connection = "keep-alive"
+  ),
+  body = list(
+    deviceid = "65",
+    function_name = "extract_measurements"
+  ),
+  encode = "form"
+)
 ```
 
 ### Code of Conduct

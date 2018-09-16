@@ -116,6 +116,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   fil <- tempfile(fileext=".R")
   on.exit(unlink(fil))
   formatR::tidy_source(text=out, width.cutoff=30, indent=4, file=fil)
+  junk <- capture.output(styler::style_file(fil))
   tmp <- paste0(readLines(fil), collapse="\n")
 
   if (add_clip) try(clipr::write_clip(tmp))
