@@ -20,7 +20,7 @@
 #' @importFrom utils capture.output
 #' @importFrom methods is
 #' @importFrom stats setNames
-#' @importFrom styler style_textn style_file
+#' @importFrom styler style_file
 # @import shiny miniUI stringi
 # @import rstudioapi
 NULL
