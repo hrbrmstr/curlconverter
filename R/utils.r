@@ -27,7 +27,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   options(deparse.max.lines = 10000)
   options(useFancyQuotes = FALSE)
 
-  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s%s%s)"
+  template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s%s%s%s)"
 
   hdrs <- enc <- bdy <- ckies <- auth <- verbos <- cfg <- data_enc <- ""
 
@@ -54,7 +54,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
       }
     }
 
-    hdrs <- paste0(capture.output(dput(req$headers,  control=NULL)), collapse="")
+    hdrs <- paste0(capture.output(dput(req$headers)), collapse="")
     hdrs <- sub("^list", ", httr::add_headers", hdrs)
 
   }
@@ -72,7 +72,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
         )
       )
     } else {
-      bdy_bits <- paste0(capture.output(dput(parse_query(req$data), control=NULL)),
+      bdy_bits <- paste0(capture.output(dput(parse_query(req$data))),
                          collapse="")
       bdy <- sprintf(", body = %s", bdy_bits)
     }
@@ -86,7 +86,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   if (req$verbose) verbose <- ", httr::verbose()"
 
   if (length(req$cookies) > 0) {
-    ckies <- paste0(capture.output(dput(req$cookies, control=NULL)),
+    ckies <- paste0(capture.output(dput(req$cookies)),
                     collapse="")
     ckies <- sub("^list", ", httr::set_cookies", ckies)
   }
@@ -94,9 +94,21 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   REQ_URL <- req$url
   if (use_parts) REQ_URL <- httr::build_url(req$url_parts)
 
+  # if there are query params, split them out, add them to the function
+  # then subtract them from the original URL
+  if (length(req$url_parts$query) > 0) {
+    qry <- paste0(capture.output(dput(req$url_parts$query)),
+                    collapse="")
+    qry <- sub("", ", query = ", qry)
+
+    bits <- httr::parse_url(REQ_URL)
+    bits$query <- NULL
+    REQ_URL <- httr::build_url(x)
+  }
+
   sprintf(
     template,
-    toupper(req$method), REQ_URL, auth, verbos, hdrs, ckies, bdy, enc
+    toupper(req$method), REQ_URL, auth, verbos, hdrs, ckies, bdy, enc, qry
   ) -> out
 
   # this does a half-decent job formatting the R function text

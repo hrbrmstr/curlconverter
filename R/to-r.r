@@ -31,13 +31,14 @@ to_r <- function(x) {
   # strip off leading `curl ` (if any)
   x <- gsub("^[[:space:]]*curl[[:space:]]+", "", x)
 
+  # parse it
   m <- docopt::docopt(.curl_opts, x)
 
   url <- m[["<url>"]]
 
   headers <-  NULL
   if (length(m[["header"]]) > 0) {
-    hdrs <- stri_split_regex(m[["header"]], pattern = ":[[:space:]]*",n = 2, simplify=TRUE)
+    hdrs <- stri_split_regex(m[["header"]], pattern = ":[[:space:]]*", n = 2, simplify = TRUE)
     headers <- as.list(setNames(hdrs[,2], hdrs[,1]))
   }
 
