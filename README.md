@@ -94,7 +94,7 @@ toJSON(content(res[[1]](), as="parsed"), auto_unbox = TRUE, pretty=TRUE)
 
     ## {
     ##   "headers": {
-    ##     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+    ##     "Accept": "application/json, text/xml, application/xml, */*,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     ##     "Accept-Encoding": "gzip, deflate, sdch",
     ##     "Accept-Language": "en-US,en;q=0.8",
     ##     "Cache-Control": "no-cache",
@@ -287,24 +287,23 @@ cat(capture.output(get_data[[1]]), sep="\n")
     ##         `X-Requested-With` = "XMLHttpRequest", Connection = "keep-alive"), 
     ##     body = list(deviceid = "65", function_name = "extract_measurements"), 
     ##     encode = "form")
-    ## <environment: 0x7f90522f8a98>
+    ## <environment: 0x7fad57d07400>
 
-That also sends this to the console and clipboard:
+That also sends this to the console and
+clipboard:
 
 ``` r
-VERB(verb = "POST", 
-     url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
-     add_headers(Origin = "http://anasim.iet.unipi.it", 
-                 `Accept-Encoding` = "gzip, deflate", 
-                 `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
-                 `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
-                 Accept = "*/*", 
-                 Referer = "http://anasim.iet.unipi.it/moniqa/", 
-                 `X-Requested-With` = "XMLHttpRequest", 
-                 Connection = "keep-alive"), 
-     body = list(deviceid = "1", 
-                 function_name = "extract_measurements"), 
-     encode = "form")
+httr::VERB(verb = "GET", url = "http://anasim.iet.unipi.it/moniqa/php/from_js.php", 
+    httr::add_headers(Origin = "http://anasim.iet.unipi.it", 
+        `Accept-Encoding` = "gzip, deflate", 
+        `Accept-Language` = "it-IT,it;q=0.8,en-US;q=0.6,en;q=0.4", 
+        `User-Agent` = "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.103 Safari/537.36", 
+        Accept = "*/*", Referer = "http://anasim.iet.unipi.it/moniqa/", 
+        `X-Requested-With` = "XMLHttpRequest", 
+        Connection = "keep-alive"), 
+    body = list(deviceid = "65", 
+        function_name = "extract_measurements"), 
+    encode = "form")
 ```
 
 ### Code of Conduct

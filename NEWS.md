@@ -5,13 +5,15 @@ WIP
 * removed V8 dependency
 * now uses `docopt` package
 * Fixed #20
+* Added "query = list(...)" to the created function if the original URL
+  had query parameters
 
 ## 0.8.0
 * support for `-v / --verbose` and `-u / --user` `curl` command-line parameters.
 
 ## 0.7.0
-* calls to `add_headers` & `set_cookies` now have an `httr::` prefix so it's not
-  necessary to load `httr`
+* calls to `add_headers` & `set_cookies` now have an `httr::` prefix so 
+  it's not necessary to load `httr`
 * the `url_parts` slot of the return value of `straighten()` is classed as
   `url` so `httr::build_url()` can create a URL from it. see next bullet
   for why.

@@ -29,13 +29,14 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
 
   template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s%s%s%s)"
 
-  hdrs <- enc <- bdy <- ckies <- auth <- verbos <- cfg <- data_enc <- ""
+  hdrs <- enc <- bdy <- ckies <- auth <- verbos <- cfg <- data_enc <- qry <- ""
 
   if (length(req$headers) > 0) {
 
     # try to determine encoding
     ct_idx <- which(grepl("content-type", names(req$headers), ignore.case=TRUE))
     if (length(ct_idx) > 0) {
+
       # retrieve & delete the content type
       ct <- req$headers[[ct_idx]]
       req$headers[[ct_idx]] <- NULL
@@ -54,7 +55,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
       }
     }
 
-    hdrs <- paste0(capture.output(dput(req$headers)), collapse="")
+    hdrs <- paste0(capture.output(dput(req$headers, control="niceNames")), collapse="")
     hdrs <- sub("^list", ", httr::add_headers", hdrs)
 
   }
@@ -72,7 +73,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
         )
       )
     } else {
-      bdy_bits <- paste0(capture.output(dput(parse_query(req$data))),
+      bdy_bits <- paste0(capture.output(dput(parse_query(req$data), control="niceNames")),
                          collapse="")
       bdy <- sprintf(", body = %s", bdy_bits)
     }
@@ -86,7 +87,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   if (req$verbose) verbose <- ", httr::verbose()"
 
   if (length(req$cookies) > 0) {
-    ckies <- paste0(capture.output(dput(req$cookies)),
+    ckies <- paste0(capture.output(dput(req$cookies, control="niceNames")),
                     collapse="")
     ckies <- sub("^list", ", httr::set_cookies", ckies)
   }
@@ -97,13 +98,13 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   # if there are query params, split them out, add them to the function
   # then subtract them from the original URL
   if (length(req$url_parts$query) > 0) {
-    qry <- paste0(capture.output(dput(req$url_parts$query)),
+    qry <- paste0(capture.output(dput(req$url_parts$query, control="niceNames")),
                     collapse="")
     qry <- sub("", ", query = ", qry)
 
     bits <- httr::parse_url(REQ_URL)
     bits$query <- NULL
-    REQ_URL <- httr::build_url(x)
+    REQ_URL <- httr::build_url(bits)
   }
 
   sprintf(
