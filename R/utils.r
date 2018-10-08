@@ -27,6 +27,8 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   options(deparse.max.lines = 10000)
   options(useFancyQuotes = FALSE)
 
+  verb <- toupper(req$method)
+
   template <- "httr::VERB(verb = '%s', url = '%s' %s%s%s%s%s%s%s)"
 
   hdrs <- enc <- bdy <- ckies <- auth <- verbos <- cfg <- data_enc <- qry <- ""
@@ -61,6 +63,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   }
 
   if (length(req$data) > 0) {
+    verb <- "POST"
     if (data_enc == "json") {
       bdy <- sprintf(", body = %s", sQuote(req$data))
       message(
@@ -109,7 +112,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
 
   sprintf(
     template,
-    toupper(req$method), REQ_URL, auth, verbos, hdrs, ckies, bdy, enc, qry
+    verb, REQ_URL, auth, verbos, hdrs, ckies, bdy, enc, qry
   ) -> out
 
   # this does a half-decent job formatting the R function text
