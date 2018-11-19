@@ -19,7 +19,10 @@ process_curl <- function(x) {
 
 
 # create one httr function from one cURL request processed with process_curl()
-create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE) {
+create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE,
+                                 use_nicenames = FALSE) {
+
+  dput_control <- if (use_nicenames) "niceNames" else "showAttributes"
 
   ml <- getOption("deparse.max.lines")
   qu <- getOption("useFancyQuotes")
@@ -57,8 +60,12 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
       }
     }
 
-    hdrs <- paste0(capture.output(dput(req$headers, control="niceNames")), collapse="")
-    hdrs <- sub("^list", ", httr::add_headers", hdrs)
+    hdrs <- paste0(capture.output(dput(req$headers, control=dput_control)), collapse="")
+    if (use_nicenames) {
+      hdrs <- sub("^list", ", httr::add_headers", hdrs)
+    } else {
+      hdrs <- sprintf(", httr::add_headers(.headers=unlist(%s))", hdrs)
+    }
 
   }
 
@@ -76,7 +83,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
         )
       )
     } else {
-      bdy_bits <- paste0(capture.output(dput(parse_query(req$data), control="niceNames")),
+      bdy_bits <- paste0(capture.output(dput(parse_query(req$data), control=dput_control)),
                          collapse="")
       bdy <- sprintf(", body = %s", bdy_bits)
     }
@@ -90,9 +97,13 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   if (req$verbose) verbose <- ", httr::verbose()"
 
   if (length(req$cookies) > 0) {
-    ckies <- paste0(capture.output(dput(req$cookies, control="niceNames")),
+    ckies <- paste0(capture.output(dput(req$cookies, control=dput_control)),
                     collapse="")
-    ckies <- sub("^list", ", httr::set_cookies", ckies)
+    if (use_nicenames) {
+      ckies <- sub("^list", ", httr::set_cookies", ckies)
+    } else {
+      ckies <- sprintf(", httr::set_cookies(.cookies=unlist(%s))", ckies)
+    }
   }
 
   REQ_URL <- req$url
@@ -101,7 +112,7 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
   # if there are query params, split them out, add them to the function
   # then subtract them from the original URL
   if (length(req$url_parts$query) > 0) {
-    qry <- paste0(capture.output(dput(req$url_parts$query, control="niceNames")),
+    qry <- paste0(capture.output(dput(req$url_parts$query, control=dput_control)),
                     collapse="")
     qry <- sub("", ", query = ", qry)
 
@@ -114,6 +125,8 @@ create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE
     template,
     verb, REQ_URL, auth, verbos, hdrs, ckies, bdy, enc, qry
   ) -> out
+
+  cat(out, file = "~/Desktop/cc.R")
 
   # this does a half-decent job formatting the R function text
   fil <- tempfile(fileext=".R")

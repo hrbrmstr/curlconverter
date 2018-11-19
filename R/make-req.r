@@ -1,3 +1,7 @@
+can_use_nicenames <- function() {
+  return("niceNames" %in% eval(formals(dput)$control))
+}
+
 #' Turn parsed cURL command lines into \code{httr} request functions
 #'
 #' Takes the output of \code{\link{straighten}()} and turns the parsed cURL command lines
@@ -15,6 +19,7 @@
 #'        from the "URL parts" that are created as a result of the call to
 #'        \code{\link{straighten}}. This is useful if you want to modify the
 #'        URL parts before calling \code{make_req}. Default: \code{FALSE}.
+#' @param use_nicenames will default to `FALSE` on R <= 3.5; can be forced `FALSE``
 #' @return a \code{list} of working R \code{function}s.
 #' @seealso \code{\link{straighten}()}, \code{httr} \code{\link[httr]{VERB}()}
 #' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
@@ -33,13 +38,15 @@
 #'                        warn=FALSE)
 #' st <- straighten(curl_line, quiet=FALSE)
 #' req <- make_req(st)
-make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1)) {
+make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1),
+                     use_nicenames=can_use_nicenames()) {
   lapply(
     x,
     create_httr_function,
     use_parts = use_parts,
     quiet = quiet,
-    add_clip = add_clip
+    add_clip = add_clip,
+    use_nicenames = use_nicenames
   ) -> req
 }
 

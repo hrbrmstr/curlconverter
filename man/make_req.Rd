@@ -4,7 +4,8 @@
 \alias{make_req}
 \title{Turn parsed cURL command lines into \code{httr} request functions}
 \usage{
-make_req(x, use_parts = FALSE, quiet = TRUE, add_clip = (length(x) == 1))
+make_req(x, use_parts = FALSE, quiet = TRUE, add_clip = (length(x) == 1),
+  use_nicenames = can_use_nicenames())
 }
 \arguments{
 \item{x}{a vector of \code{curlcoverter} objects}
@@ -21,6 +22,8 @@ source code to the console.}
 character string contents of the last newly made `httr::VERB` function (i.e.
 this is intended to be used in a workflow where only one cURL command line
 is being processed). Defaults to \code{TRUE} if \code{length(x)} is \code{1}}
+
+\item{use_nicenames}{will default to `FALSE` on R <= 3.5; can be forced `FALSE``}
 }
 \value{
 a \code{list} of working R \code{function}s.
