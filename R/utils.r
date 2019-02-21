@@ -1,3 +1,7 @@
+quiet_option <- function() {
+  getOption("curlconverter.quiet", default = FALSE)
+}
+
 process_curl <- function(x) {
 
   req <- to_r(x)
@@ -19,10 +23,12 @@ process_curl <- function(x) {
 
 
 # create one httr function from one cURL request processed with process_curl()
-create_httr_function <- function(req, use_parts=FALSE, quiet=TRUE, add_clip=TRUE,
+create_httr_function <- function(req, use_parts=FALSE, quiet, add_clip=TRUE,
                                  use_nicenames = FALSE) {
 
   dput_control <- if (use_nicenames) "niceNames" else "showAttributes"
+
+  if (missing(quiet)) quiet <- quiet_option()
 
   ml <- getOption("deparse.max.lines")
   qu <- getOption("useFancyQuotes")

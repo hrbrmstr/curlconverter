@@ -14,6 +14,12 @@ the system clipboard or by passing in a vector of 'cURL' command-lines and getti
 a list of parameter elements which can be used to form 'httr' requests. These lists can
 be passed to another function to automagically make 'httr' functions.
 }
+\section{Quiet! (pls)}{
+
+
+You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+}
+
 \author{
 Bob Rudis (bob@rud.is)
 }

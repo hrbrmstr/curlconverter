@@ -5,6 +5,10 @@
 #' \code{\link{make_req}()} to automagically make an \code{httr}
 #' \code{\link[httr]{VERB}()} function.
 #'
+#' @section Quiet! (pls):
+#'
+#' You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+#'
 #' @param curls a character vector of one or more cURL command lines. It will
 #'        read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
 #'        browser developer tools).
@@ -25,7 +29,9 @@
 #' # external test which captures live data
 #' content(my_ip[[1]](), as="parsed")
 #' }
-straighten <- function(curls=read_clip(), quiet=FALSE) {
+straighten <- function(curls=read_clip(), quiet) {
+
+  if (missing(quiet)) quiet <- quiet_option()
 
   if (!quiet) message(curls)
 

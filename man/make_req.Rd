@@ -4,7 +4,7 @@
 \alias{make_req}
 \title{Turn parsed cURL command lines into \code{httr} request functions}
 \usage{
-make_req(x, use_parts = FALSE, quiet = TRUE, add_clip = (length(x) == 1),
+make_req(x, use_parts = FALSE, quiet, add_clip = (length(x) == 1),
   use_nicenames = can_use_nicenames())
 }
 \arguments{
@@ -33,6 +33,12 @@ Takes the output of \code{\link{straighten}()} and turns the parsed cURL command
 into working \code{httr} \code{\link[httr]{VERB}()} functions, optionally \code{cat}'ing the text of each function
 to the console and/or replacing the system clipboard with the source code for the function.
 }
+\section{Quiet! (pls)}{
+
+
+You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+}
+
 \examples{
 \dontrun{
 library(httr)

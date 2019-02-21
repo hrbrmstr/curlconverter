@@ -8,6 +8,10 @@
 #' a list of parameter elements which can be used to form 'httr' requests. These lists can
 #' be passed to another function to automagically make 'httr' functions.
 #'
+#' @section Quiet! (pls):
+#'
+#' You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+#'
 #' @name curlconverter
 #' @docType package
 #' @author Bob Rudis (bob@@rud.is)

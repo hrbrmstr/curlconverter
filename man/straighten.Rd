@@ -4,7 +4,7 @@
 \alias{straighten}
 \title{Processes cURL command-line requests}
 \usage{
-straighten(curls = read_clip(), quiet = FALSE)
+straighten(curls = read_clip(), quiet)
 }
 \arguments{
 \item{curls}{a character vector of one or more cURL command lines. It will
@@ -24,6 +24,12 @@ components that can be used to build \code{httr} requests or passed to
 \code{\link{make_req}()} to automagically make an \code{httr}
 \code{\link[httr]{VERB}()} function.
 }
+\section{Quiet! (pls)}{
+
+
+You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+}
+
 \examples{
 \dontrun{
 library(httr)

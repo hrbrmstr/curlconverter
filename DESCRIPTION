@@ -2,7 +2,7 @@ Package: curlconverter
 Type: Package
 Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
 Version: 1.0.0
-Date: 2018-08-25
+Date: 2019-02-21
 Authors@R: c(
     person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0001-5670-2640"))
@@ -20,7 +20,7 @@ SystemRequirements: xclip <http://sourceforge.net/projects/xclip/> or xsel
   <http://www.vergenet.net/~conrad/software/xsel/> for accessing the X11
   clipboardURL: https://github.com/hrbrmstr/curlconverter
 BugReports: https://github.com/hrbrmstr/curlconverter/issues
-License: AGPL
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests:
@@ -40,4 +40,4 @@ Imports:
     docopt,
     stats,
     styler
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.1

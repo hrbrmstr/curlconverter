@@ -4,7 +4,7 @@
 \alias{curl_convert}
 \title{Shortcut to convert a single cURL command-line into a single R function}
 \usage{
-curl_convert(curls = read_clip(), quiet = FALSE)
+curl_convert(curls = read_clip(), quiet)
 }
 \arguments{
 \item{curls}{a character vector of one or more cURL command lines. It will

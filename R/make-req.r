@@ -8,6 +8,10 @@ can_use_nicenames <- function() {
 #' into working \code{httr} \code{\link[httr]{VERB}()} functions, optionally \code{cat}'ing the text of each function
 #' to the console and/or replacing the system clipboard with the source code for the function.
 #'
+#' @section Quiet! (pls):
+#'
+#' You can use `option(curlconverter.quiet = TRUE)` to silence all stdout output.
+#'
 #' @param x a vector of \code{curlcoverter} objects
 #' @param quiet if \code{FALSE}, will cause \code{make_req()} to write complete function
 #'        source code to the console.
@@ -38,8 +42,9 @@ can_use_nicenames <- function() {
 #'                        warn=FALSE)
 #' st <- straighten(curl_line, quiet=FALSE)
 #' req <- make_req(st)
-make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1),
+make_req <- function(x, use_parts=FALSE, quiet, add_clip=(length(x)==1),
                      use_nicenames=can_use_nicenames()) {
+  if (missing(quiet)) quiet <- quiet_option()
   lapply(
     x,
     create_httr_function,
@@ -60,7 +65,9 @@ make_req <- function(x, use_parts=FALSE, quiet=TRUE, add_clip=(length(x)==1),
 #'        command line will be output. (Default: \code{FALSE})
 #' @return an R function and a version of the function on the clipboard
 #' @export
-curl_convert <- function(curls=read_clip(), quiet=FALSE) {
+curl_convert <- function(curls=read_clip(), quiet) {
+
+  if (missing(quiet)) quiet <- quiet_option()
 
   tmp <- straighten(curls, quiet)
   tmp <- make_req(tmp)
