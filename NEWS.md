@@ -1,6 +1,8 @@
-## 1.0.0
+## 1.1.0
+* Chrome now is stupid and has `\<newline>` between params (great for humans, not so great for this pkg)
+  so `straighten()` now only works in single curl command line mode as `read_clip()`
 
-WIP
+## 1.0.0
 
 * removed V8 dependency
 * now uses `docopt` package

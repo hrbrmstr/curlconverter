@@ -1,8 +1,8 @@
 Package: curlconverter
 Type: Package
 Title: Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests
-Version: 1.0.0
-Date: 2018-08-25
+Version: 1.1.0
+Date: 2020-03-05
 Authors@R: c(
     person("Bob", "Rudis", email = "bob@rud.is", role = c("aut", "cre"), 
            comment = c(ORCID = "0000-0001-5670-2640"))
@@ -40,4 +40,4 @@ Imports:
     docopt,
     stats,
     styler
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 7.0.2

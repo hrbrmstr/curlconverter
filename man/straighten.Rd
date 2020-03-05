@@ -7,7 +7,7 @@
 straighten(curls = read_clip(), quiet = FALSE)
 }
 \arguments{
-\item{curls}{a character vector of one or more cURL command lines. It will
+\item{curls}{a character vector of one cURL command lines. It will
 read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
 browser developer tools).}
 
@@ -15,8 +15,7 @@ browser developer tools).}
 command line will be output. (Default: \code{FALSE})}
 }
 \value{
-\code{list} of \code{length(curls)} containing parsed data (i.e. to be used
-         in `httr` requests)
+parsed data (i.e. to be used in `httr` requests)
 }
 \description{
 Takes in a \emph{"Copy as cURL"} command line and returns a \code{list} of

@@ -4,8 +4,11 @@
 \alias{from_har}
 \title{Convert HAR to cURL}
 \usage{
-from_har(har, filter = c("All", "Doc", "JS", "CSS", "XHR", "Img", "XHR",
-  "Media", "Font", "WS", "Manifest", "Other"))
+from_har(
+  har,
+  filter = c("All", "Doc", "JS", "CSS", "XHR", "Img", "XHR", "Media", "Font", "WS",
+    "Manifest", "Other")
+)
 }
 \arguments{
 \item{har}{a JSON string, URL or file}

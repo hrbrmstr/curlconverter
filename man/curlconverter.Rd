@@ -3,7 +3,6 @@
 \docType{package}
 \name{curlconverter}
 \alias{curlconverter}
-\alias{curlconverter-package}
 \title{Tools to Transform 'cURL' Command-Line Calls to 'httr' Requests}
 \description{
 Deciphering web/'REST' 'API' and 'XHR' calls can be tricky, which is one reason why

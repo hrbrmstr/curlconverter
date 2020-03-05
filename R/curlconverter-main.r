@@ -5,13 +5,12 @@
 #' \code{\link{make_req}()} to automagically make an \code{httr}
 #' \code{\link[httr]{VERB}()} function.
 #'
-#' @param curls a character vector of one or more cURL command lines. It will
+#' @param curls a character vector of one cURL command lines. It will
 #'        read from the clipboard (i.e. if you did a \emph{"Copy as cURL"} from
 #'        browser developer tools).
 #' @param quiet if \code{FALSE}, a \code{message} with the original \code{cURL}
 #'        command line will be output. (Default: \code{FALSE})
-#' @return \code{list} of \code{length(curls)} containing parsed data (i.e. to be used
-#'          in `httr` requests)
+#' @return parsed data (i.e. to be used in `httr` requests)
 #' @seealso \code{\link{make_req}()}, \code{httr} \code{\link[httr]{VERB}()}
 #' @references \href{https://developer.chrome.com/devtools/docs/network}{Evaluating Network Performance},
 #'             \href{https://developer.mozilla.org/en-US/docs/Tools/Network_Monitor}{Network Monitor}
@@ -27,9 +26,7 @@
 #' }
 straighten <- function(curls=read_clip(), quiet=FALSE) {
 
-  if (!quiet) message(curls)
-
-  obj <- lapply(curls, process_curl)
+  obj <- list(process_curl(curls, quiet=quiet))
 
   class(obj) <- c("cc_container", class(obj))
 

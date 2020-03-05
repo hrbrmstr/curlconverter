@@ -1,4 +1,8 @@
-process_curl <- function(x) {
+process_curl <- function(x, quiet = TRUE) {
+
+  x <- paste0(trimws(gsub("\\", "", x, fixed = TRUE)), collapse = " ")
+
+  if (!quiet) message(x)
 
   req <- to_r(x)
 
