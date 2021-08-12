@@ -19,4 +19,4 @@ curlr = function(curl_statement, as.received = F, as.json = F, quietly = T){
     if(!as.json){result = fromJSON(result) }
   }
   result
-}
+} 
